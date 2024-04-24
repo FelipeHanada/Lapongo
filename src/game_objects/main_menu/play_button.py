@@ -2,7 +2,7 @@ from pgframework import *
 
 
 class MainMenuPlayButton(AbstractGameObject):
-    _sprite_file_path = 'src/main_menu/assets/sprites/play_button.png'
+    _sprite_file_path = 'src/assets/sprites/main_menu/play_button.png'
     _sprite_size = (96, 24)
     _sprite_sheet = SpriteSheetGrid(_sprite_file_path, 1, 2, *_sprite_size)
     _flipbook = _sprite_sheet.get_flip_book_from_pack(2, True)

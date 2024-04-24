@@ -2,7 +2,7 @@ from pgframework import *
 
 
 class MainMenuTitleSign(AbstractGameObject):
-    _sprite_file_path = 'src/main_menu/assets/sprites/title_sign.png'
+    _sprite_file_path = 'src/assets/sprites/main_menu/title_sign.png'
     _sprite_size = (352, 180)
     _sprite_sheet = SpriteSheetGrid(_sprite_file_path, 2, 2, *_sprite_size)
     _flipbook = _sprite_sheet.get_flip_book_from_pack(4, True)

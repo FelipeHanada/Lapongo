@@ -1,8 +1,9 @@
 from pgframework import *
 import pygame
-from .game_objects.background import MainMenuBackground
-from .game_objects.title_sign import MainMenuTitleSign
-from .game_objects.play_button import MainMenuPlayButton
+from src.game_objects.main_menu.background import MainMenuBackground
+from src.game_objects.main_menu.title_sign import MainMenuTitleSign
+from src.game_objects.main_menu.play_button import MainMenuPlayButton
+
 
 class MainMenuScene(AbstractScene):
     def __init__(self, game: Game):

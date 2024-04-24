@@ -1,6 +1,6 @@
 from pgframework import *
 import pygame
-from src.main_menu.main_menu import MainMenuScene
+from src.scenes.main_menu import MainMenuScene
 
 
 class MainGame(Game):
