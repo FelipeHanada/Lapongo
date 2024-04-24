@@ -1,5 +1,8 @@
 from pgframework import *
 
+class MainMenuPlayButtonOnClick(AbstractMessage):
+    pass
+
 
 class MainMenuPlayButton(AbstractGameObject):
     _sprite_file_path = 'src/assets/sprites/main_menu/play_button.png'
@@ -19,12 +22,17 @@ class MainMenuPlayButton(AbstractGameObject):
         self.add_component(self.sprite_2d)
 
         self.mouse_listener = MouseListener(self.sprite_2d, self.get_absolute_rect())
-        self.mouse_listener.on_press(1, self.on_press)
+        self.mouse_listener.on_pressed(1, self.on_pressed)
+        self.mouse_listener.on_released(1, self.on_released)
         self.mouse_listener.on_release(1, self.on_release)
         self.add_component(self.mouse_listener)
 
-    def on_press(self):
+    def on_pressed(self):
         self.mouse_listener.send_message(SetFlipBookFrameMessage(self.mouse_listener, 1), SendMessageTargetEnum.PARENT)
 
-    def on_release(self):
+    def on_released(self):
         self.mouse_listener.send_message(SetFlipBookFrameMessage(self.mouse_listener, 0), SendMessageTargetEnum.PARENT)
+
+    def on_release(self):
+        self.send_message(MainMenuPlayButtonOnClick(self), SendMessageTargetEnum.ROOT)
+

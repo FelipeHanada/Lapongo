@@ -1,6 +1,7 @@
 from pgframework import *
 import pygame
-from src.scenes.main_menu import MainMenuScene
+from src.scenes.main_menu_scene import MainMenuScene
+from src.scenes.game_scene import GameScene
 
 
 class MainGame(Game):
@@ -17,6 +18,7 @@ class MainGame(Game):
         )
 
         self.add_scene('main_menu', MainMenuScene.get_default_factory(self))
+        self.add_scene('game', GameScene.get_default_factory(self))
 
 if __name__ == '__main__':
     MainGame().run(first_scene='main_menu')
