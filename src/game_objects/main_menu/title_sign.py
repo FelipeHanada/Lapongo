@@ -8,8 +8,8 @@ class MainMenuTitleSign(AbstractGameObject):
     _flipbook = _sprite_sheet.get_flip_book_from_pack(4, True)
     _flipbook_timed = FlipBookTimed.get_from_flip_book(_flipbook, 0.4)
 
-    def __init__(self, parent: AbstractGameObject, scene: AbstractScene, priority: int = 0):
-        AbstractGameObject.__init__(self, parent, scene, priority=priority, rect=pygame.Rect(0, 0, *self._sprite_size))
+    def __init__(self, *args, **kwargs):
+        AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(0, 0, *self._sprite_size))
 
         rect = self.get_rect()
         rect.centerx = self.get_parent_game_object().get_rect().width // 2

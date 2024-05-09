@@ -17,8 +17,8 @@ class MainGame(Game):
             tick_rate=60
         )
 
-        self.add_scene('main_menu', MainMenuScene.get_default_factory(self))
-        self.add_scene('game', GameScene.get_default_factory(self))
+        self.add_scene('main_menu', DefaultSceneFactory(MainMenuScene, self))
+        self.add_scene('game', DefaultSceneFactory(GameScene, self))
 
 if __name__ == '__main__':
     MainGame().run(first_scene='main_menu')

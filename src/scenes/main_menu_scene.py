@@ -11,12 +11,11 @@ class MainMenuScene(AbstractScene):
 
         self.add_event_callback(pygame.KEYUP, self._on_escape, {'key': pygame.K_ESCAPE})
 
-        self.add_game_object(MainMenuBackground.create_scene_game_object(self, priority=0))
-        self.add_game_object(MainMenuTitleSign.create_scene_game_object(self, priority=1))
-        self.add_game_object(MainMenuPlayButton.create_scene_game_object(self, priority=1))
+        self.add_scene_game_object(MainMenuBackground, priority=0)
+        self.add_scene_game_object(MainMenuTitleSign, priority=1)
+        self.add_scene_game_object(MainMenuPlayButton, priority=1)
 
-        self._close_frame = MainMenuCloseFrame.create_scene_game_object(self, priority=2, enabled=False, visible=False)
-        self.add_game_object(self._close_frame)
+        self._close_frame = self.add_scene_game_object(MainMenuCloseFrame, priority=2, enabled=False, visible=False)
 
         self.add_message_callback(MainMenuPlayButtonOnClick, self.on_play_button_pressed)
 

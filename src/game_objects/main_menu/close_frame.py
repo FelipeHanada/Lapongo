@@ -2,11 +2,11 @@ from pgframework import *
 
 
 class MainMenuCloseFrame(AbstractGameObject):
-    _sprite_file_path = 'src/assets/sprites/main_menu/close_frame.png'
+    _sprite_file_path = 'src/assets/sprites/main_menu/close_frame/frame.png'
     _sprite_size = (128, 64)
 
-    def __init__(self, parent: AbstractGameObject, scene: AbstractScene, *args, **kwargs):
-        AbstractGameObject.__init__(self, parent, scene, **kwargs, rect=pygame.Rect(0, 0, *self._sprite_size))
+    def __init__(self, *args, **kwargs):
+        AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
         rect.centerx = self.get_parent_game_object().get_rect().width // 2
@@ -15,11 +15,11 @@ class MainMenuCloseFrame(AbstractGameObject):
 
         self.add_component(Sprite2D(self, self._sprite_file_path))
 
-        self.add_child_game_object(CloseFrameButton(self, scene, priority=1))
+        self.add_child_game_object(CloseFrameButton(self, kwargs['parent_scene'], priority=1))
         
 
 class CloseFrameButton(AbstractGameObject):
-    _sprite_file_path = 'src/assets/sprites/main_menu/close_frame_button.png'
+    _sprite_file_path = 'src/assets/sprites/main_menu/close_frame/confirm_button.png'
     _sprite_size = (96, 14)
 
     def __init__(self, parent: AbstractGameObject, scene: AbstractScene, priority: int = 0):
