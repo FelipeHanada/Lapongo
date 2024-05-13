@@ -18,7 +18,7 @@ class MainMenuScene(AbstractScene):
         self._play_button = self.add_scene_game_object(MainMenuPlayButton, priority=1)
 
         self._close_frame_black_filter: 'AbstractGameObject' = self.add_scene_game_object(MainMenuCloseFrameBlackFilter, priority=2, enabled=False, visible=False)
-        self._close_frame: 'AbstractGameObject' = self.add_scene_game_object(MainMenuCloseFrame, priority=3, enabled=False, visible=False)
+        self._close_frame: 'MainMenuCloseFrame' = self.add_scene_game_object(MainMenuCloseFrame, priority=3, enabled=False, visible=False)
 
         self.add_message_callback(MainMenuPlayButtonOnClick, self.on_play_button_pressed)
 

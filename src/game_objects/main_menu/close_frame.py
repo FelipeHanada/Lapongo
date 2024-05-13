@@ -17,16 +17,10 @@ class MainMenuCloseFrame(AbstractGameObject):
 
         self.add_child_game_object(CloseFrameButton(self, kwargs['parent_scene'], priority=1))
 
-        self._mouse_listener: 'MouseListener' = self.add_component(MouseListener(self, self.get_absolute_rect()))
-        self._mouse_listener.on_blur(self.on_blur)
-
     def set_opened(self, opened: bool):
         self.set_enabled(opened)
         self.set_visible(opened)
-        self._mouse_listener.set_focused(opened)
 
-    def on_blur(self):
-        self.get_parent_scene().set_open_close_frame(False)
 
 class CloseFrameButton(AbstractGameObject):
     _sprite_file_path = 'src/assets/sprites/main_menu/close_frame/confirm_button.png'
