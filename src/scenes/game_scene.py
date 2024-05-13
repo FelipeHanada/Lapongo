@@ -1,6 +1,7 @@
 from pgframework import *
 from src.game_objects.game_scene.background import GameSceneBackground
 from src.game_objects.game_scene.player import GameScenePlayer
+from src.game_objects.game_scene.rune_frame import GameSceneRuneFrame
 
 class GameScene(AbstractScene):
     def __init__(self, game: Game):
@@ -8,3 +9,4 @@ class GameScene(AbstractScene):
 
         self.add_scene_game_object(GameSceneBackground, priority=0)
         self.add_scene_game_object(GameScenePlayer, priority=1)
+        self.add_scene_game_object(GameSceneRuneFrame, priority=1)

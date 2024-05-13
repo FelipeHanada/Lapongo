@@ -14,7 +14,7 @@ class MainMenuPlayButton(AbstractGameObject):
     def __init__(self, *args, **kwargs):
         rect = pygame.Rect(0, 180, *self._sprite_size)
         
-        rect.centerx = kwargs['parent_scene'].get_parent_game().get_display_handler().get_render_display_data().center[0]
+        rect.centerx = kwargs['parent_scene'].get_game().get_display_handler().get_render_display_data().center[0]
 
         AbstractGameObject.__init__(self, *args, **kwargs, rect=rect)
         

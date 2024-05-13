@@ -23,7 +23,7 @@ class MainMenuScene(AbstractScene):
         self.add_message_callback(MainMenuPlayButtonOnClick, self.on_play_button_pressed)
 
     def on_play_button_pressed(self, message: MainMenuPlayButtonOnClick):
-        self.get_parent_game().change_scene('game')
+        self.get_game().change_scene('game')
 
     def set_open_close_frame(self, opened: bool):
         self.send_message(
