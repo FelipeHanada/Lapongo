@@ -31,6 +31,9 @@ class GameSceneRuneInventoryUser(AbstractGameObject):
 
     def get_holding_rune(self):
         return self._holding_rune
+    
+    def get_last_rune_slot(self):
+        return self._last_rune_slot
 
     def _on_mouse_motion(self, pos):
         if self._holding_rune:

@@ -40,9 +40,9 @@ class CloseFrameButton(AbstractGameObject):
         self.sprite_2d = self.add_component(Sprite2D(self, self._sprite_file_path))
 
         self._mouse_listener = MouseListener(self.sprite_2d, self.get_absolute_rect())
-        self._mouse_listener.on_pressed(1, self.on_pressed)
-        self._mouse_listener.on_released(1, self.on_released)
-        self._mouse_listener.on_release(1, self.on_release)
+        self._mouse_listener.on_pressed_in_rect(1, self.on_pressed)
+        self._mouse_listener.on_released_in_rect(1, self.on_released)
+        self._mouse_listener.on_release_in_rect(1, self.on_release)
         self.add_component(self._mouse_listener)
 
     def on_pressed(self):

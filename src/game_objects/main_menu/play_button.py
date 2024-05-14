@@ -21,9 +21,9 @@ class MainMenuPlayButton(AbstractGameObject):
         self.sprite_2d = self.add_component(Sprite2D(self, self._button_released_sprite))
 
         self.mouse_listener = self.add_component(MouseListener(self.sprite_2d, self.get_absolute_rect()))
-        self.mouse_listener.on_pressed(1, self.on_pressed)
-        self.mouse_listener.on_released(1, self.on_released)
-        self.mouse_listener.on_release(1, self.on_release)
+        self.mouse_listener.on_pressed_in_rect(1, self.on_pressed)
+        self.mouse_listener.on_released_in_rect(1, self.on_released)
+        self.mouse_listener.on_release_in_rect(1, self.on_release)
 
     def on_pressed(self):
         self.sprite_2d.set_image(self._button_pressed_sprite)
@@ -33,4 +33,3 @@ class MainMenuPlayButton(AbstractGameObject):
 
     def on_release(self):
         self.send_message(MainMenuPlayButtonOnClick(self), SendMessageTargetEnum.ROOT)
-

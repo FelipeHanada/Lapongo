@@ -8,7 +8,6 @@ class GameScene(AbstractScene):
     def __init__(self, game: Game):
         AbstractScene.__init__(self, game, (255, 255, 255))
 
-
         self.add_scene_game_object(GameSceneBackground, priority=0)
         rune_inventory_user = self.add_scene_game_object(GameSceneRuneInventoryUser, priority=10)
         self.add_scene_game_object(GameScenePlayer, priority=1)

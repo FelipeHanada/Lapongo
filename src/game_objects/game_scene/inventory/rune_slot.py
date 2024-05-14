@@ -8,7 +8,7 @@ class RuneSlot(Slot):
         self._rune_inventory_user = rune_inventory_user
 
         mouse_listener = self.add_component(MouseListener(self, show_debug=True))
-        mouse_listener.on_press(1, self._on_press)
+        mouse_listener.on_press_in_rect(1, self._on_press)
         mouse_listener.on_hover(self._on_hover)
 
     def _on_press(self):
@@ -26,5 +26,8 @@ class RuneSlot(Slot):
             return
 
         if self._rune_inventory_user.get_holding_rune():
+            if self.get_item() is not None:
+                self._rune_inventory_user.get_last_rune_slot().set_item(self.get_item())
+            
             self.set_item(self._rune_inventory_user.get_holding_rune())
             self._rune_inventory_user.drop_rune()

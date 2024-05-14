@@ -21,6 +21,10 @@ class GameSceneRuneFrame(AbstractGameObject):
             self.add_child_game_object(slot)
 
         from .runes.water_rune import WaterRune
-        a = WaterRune()
-        self._rune_slots[0].set_item(a)
-
+        from .runes.air_rune import AirRune
+        from .runes.fire_rune import FireRune
+        from .runes.earth_rune import EarthRune
+        self._rune_slots[0].set_item(WaterRune())
+        self._rune_slots[1].set_item(AirRune())
+        self._rune_slots[2].set_item(FireRune())
+        self._rune_slots[3].set_item(EarthRune())
