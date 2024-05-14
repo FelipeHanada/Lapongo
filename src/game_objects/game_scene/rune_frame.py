@@ -1,30 +1,26 @@
 from pgframework import *
-from .slot import Slot
+from .inventory.rune_slot import RuneSlot
 
 class GameSceneRuneFrame(AbstractGameObject):
     _sprite_file_path = 'src/assets/sprites/game_scene/rune_frame.png'
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, rune_inventory_user=None, **kwargs):
         AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(64, 8, 128, 128))
+
+        self.rune_inventory_user = rune_inventory_user
 
         self.add_component(Sprite2D(self, self._sprite_file_path))
 
+        slot_positions = ((32, 16), (80, 16), (40, 40), (72, 40), (16, 56), (56, 56), (96, 56), (56, 76), (32, 96), (80, 96))
+
         self._rune_slots = [
-            Slot(self, rect=pygame.Rect(32, 16, 16, 16)),
-            Slot(self, rect=pygame.Rect(80, 16, 16, 16)),
-            Slot(self, rect=pygame.Rect(40, 40, 16, 16)),
-            Slot(self, rect=pygame.Rect(72, 40, 16, 16)),
-            Slot(self, rect=pygame.Rect(16, 56, 16, 16)),
-            Slot(self, rect=pygame.Rect(56, 56, 16, 16)),
-            Slot(self, rect=pygame.Rect(96, 56, 16, 16)),
-            Slot(self, rect=pygame.Rect(56, 76, 16, 16)),
-            Slot(self, rect=pygame.Rect(32, 96, 16, 16)),
-            Slot(self, rect=pygame.Rect(80, 96, 16, 16)),
+            RuneSlot(self, rect=pygame.Rect(*pos, 16, 16), rune_inventory_user=rune_inventory_user)
+            for pos in slot_positions
         ]
+        for slot in self._rune_slots:
+            self.add_child_game_object(slot)
 
         from .runes.water_rune import WaterRune
         a = WaterRune()
         self._rune_slots[0].set_item(a)
 
-        for slot in self._rune_slots:
-            self.add_child_game_object(slot)

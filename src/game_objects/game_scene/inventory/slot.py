@@ -23,5 +23,7 @@ class Slot(AbstractGameObject):
         return self._item
     
     def remove_item(self):
+        item = self._item
         self._item = None
         self.remove_child_game_object(self._item)
+        return item
