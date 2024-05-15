@@ -22,6 +22,9 @@ class MainMenuScene(AbstractScene):
 
         self.add_message_callback(MainMenuPlayButtonOnClick, self.on_play_button_pressed)
 
+        self.print_scene_tree()
+
+
     def on_play_button_pressed(self, message: MainMenuPlayButtonOnClick):
         self.get_game().change_scene('game')
 

@@ -9,13 +9,13 @@ class MainMenuCloseFrame(AbstractGameObject):
         AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
-        rect.centerx = self.get_parent_game_object().get_rect().width // 2
-        rect.centery = self.get_parent_game_object().get_rect().height // 2
+        rect.centerx = self.get_parent().get_rect().width // 2
+        rect.centery = self.get_parent().get_rect().height // 2
         self.set_rect(rect)
 
         self.add_component(Sprite2D(self, self._sprite_file_path))
 
-        self.add_child_game_object(CloseFrameButton(self, kwargs['parent_scene'], priority=1))
+        self.add_child_game_object(CloseFrameButton(self, priority=1))
 
     def set_opened(self, opened: bool):
         self.set_enabled(opened)
@@ -29,17 +29,17 @@ class CloseFrameButton(AbstractGameObject):
     _button_released_sprite = _sprite_sheet.get_frame(0, 0)
     _button_pressed_sprite = _sprite_sheet.get_frame(0, 1)
 
-    def __init__(self, parent: AbstractGameObject, scene: AbstractScene, priority: int = 0):
-        AbstractGameObject.__init__(self, parent, scene, priority=priority, rect=pygame.Rect(0, 0, *self._sprite_size))
+    def __init__(self, parent: AbstractGameObject, priority: int = 0):
+        AbstractGameObject.__init__(self, parent, priority=priority, rect=pygame.Rect(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
-        rect.centerx = self.get_parent_game_object().get_rect().width // 2
-        rect.bottom = self.get_parent_game_object().get_rect().height - 13
+        rect.centerx = self.get_parent().get_rect().width // 2
+        rect.bottom = self.get_parent().get_rect().height - 13
         self.set_rect(rect)
 
         self.sprite_2d = self.add_component(Sprite2D(self, self._sprite_file_path))
 
-        self._mouse_listener = MouseListener(self.sprite_2d, self.get_absolute_rect())
+        self._mouse_listener = MouseListener(self.sprite_2d, rect=self.get_absolute_rect())
         self._mouse_listener.on_pressed_in_rect(1, self.on_pressed)
         self._mouse_listener.on_released_in_rect(1, self.on_released)
         self._mouse_listener.on_release_in_rect(1, self.on_release)

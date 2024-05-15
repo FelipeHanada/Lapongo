@@ -12,7 +12,7 @@ class MainMenuTitleSign(AbstractGameObject):
         AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(0, 0, *self._sprite_size))
 
         rect = self.get_rect()
-        rect.centerx = self.get_parent_game_object().get_rect().width // 2
+        rect.centerx = self.get_parent().get_rect().width // 2
         self.set_rect(rect)
 
         self.add_component(Sprite2DAnimated(self, self._flipbook_timed, (0, 0)))

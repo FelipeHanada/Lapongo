@@ -13,10 +13,10 @@ class GameSceneRuneInventoryUser(AbstractGameObject):
         self._mouse_listener.on_release(1, self._on_release)
 
     def drop_rune(self):
-        if self._holding_rune:
-            self._holding_rune = None
-        
+        if self._holding_rune:        
             self.remove_child_game_object(self._holding_rune)
+            self._holding_rune = None
+            
             pygame.mouse.set_visible(True)
 
     def pick_rune(self, rune_slot: 'RuneSlot'):
