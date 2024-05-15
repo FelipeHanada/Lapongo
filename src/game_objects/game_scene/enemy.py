@@ -7,7 +7,7 @@ class GameSceneEnemy(AbstractGameObject):
     }
 
     def __init__(self, *args, **kwargs):
-        AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(336, 180, 32, 32))
+        AbstractGameObject.__init__(self, *args, **kwargs, rect=PygameRectAdapter(336, 180, 32, 32))
 
         self.add_component(Sprite2DAnimated(self, self.get_idle_timed_flipbook('frog')))
 

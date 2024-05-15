@@ -1,5 +1,5 @@
-from typing import Any
 from pgframework import *
+
 
 class MainMenuPlayButtonOnClick(AbstractMessage):
     pass
@@ -13,9 +13,9 @@ class MainMenuPlayButton(AbstractGameObject):
     _button_pressed_sprite = _sprite_sheet.get_frame(0, 1)
 
     def __init__(self, *args, **kwargs):
-        rect = pygame.Rect(0, 180, *self._sprite_size)
+        rect = PygameRectAdapter(0, 180, *self._sprite_size)
         AbstractGameObject.__init__(self, *args, **kwargs, rect=rect)
-        rect.centerx = self.get_parent_scene().get_game().get_display_handler().get_render_display_data().center[0]
+        rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
         
         self.sprite_2d = self.add_component(Sprite2D(self, self._button_released_sprite))
 

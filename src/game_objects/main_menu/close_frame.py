@@ -6,11 +6,14 @@ class MainMenuCloseFrame(AbstractGameObject):
     _sprite_size = (128, 64)
 
     def __init__(self, *args, **kwargs):
-        AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(0, 0, *self._sprite_size))
+        AbstractGameObject.__init__(self, *args, **kwargs, rect=PygameRectAdapter(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
-        rect.centerx = self.get_parent().get_rect().width // 2
-        rect.centery = self.get_parent().get_rect().height // 2
+
+        rect.set_center((
+            self.get_parent().get_rect().get_width() // 2,
+            self.get_parent().get_rect().get_height() // 2
+        ))
         self.set_rect(rect)
 
         self.add_component(Sprite2D(self, self._sprite_file_path))
@@ -30,11 +33,11 @@ class CloseFrameButton(AbstractGameObject):
     _button_pressed_sprite = _sprite_sheet.get_frame(0, 1)
 
     def __init__(self, parent: AbstractGameObject, priority: int = 0):
-        AbstractGameObject.__init__(self, parent, priority=priority, rect=pygame.Rect(0, 0, *self._sprite_size))
+        AbstractGameObject.__init__(self, parent, priority=priority, rect=PygameRectAdapter(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
-        rect.centerx = self.get_parent().get_rect().width // 2
-        rect.bottom = self.get_parent().get_rect().height - 13
+        rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
+        rect.set_bottom(self.get_parent().get_rect().get_height() - 13)
         self.set_rect(rect)
 
         self.sprite_2d = self.add_component(Sprite2D(self, self._sprite_file_path))
@@ -54,5 +57,5 @@ class CloseFrameButton(AbstractGameObject):
     def on_release(self):
         self.get_game().stop()
 
-    def on_mouse_button_down(self, event: pygame.event.Event):
+    def on_mouse_button_down(self, event: PygameEventAdapter):
         self.get_parent_game_object().get_parent_scene().get_parent_game().stop()

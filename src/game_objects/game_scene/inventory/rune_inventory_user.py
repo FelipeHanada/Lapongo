@@ -8,7 +8,7 @@ class GameSceneRuneInventoryUser(AbstractGameObject):
         self._holding_rune = None
         self._last_rune_slot = None
 
-        self._mouse_listener = self.add_component(MouseListener(self, rect=pygame.Rect(0, 0, 480, 270)))
+        self._mouse_listener = self.add_component(MouseListener(self, rect=PygameRectAdapter(0, 0, 480, 270)))
         self._mouse_listener.on_mouse_motion(self._on_mouse_motion)
         self._mouse_listener.on_release(1, self._on_release)
 
@@ -37,9 +37,11 @@ class GameSceneRuneInventoryUser(AbstractGameObject):
 
     def _on_mouse_motion(self, pos):
         if self._holding_rune:
-            rect = self.get_display_handler().convert_rect_real_to_render(pygame.Rect(*pos, 0, 0))
-            rect.x -= self._holding_rune.get_rect().width // 2
-            rect.y -= self._holding_rune.get_rect().height // 2
+            rect = self.get_display_handler().convert_rect_real_to_render(PygameRectAdapter(*pos, 0, 0))
+            rect.move_ip(
+                -self._holding_rune.get_rect().get_width() // 2,
+                -self._holding_rune.get_rect().get_height() // 2
+            )
             self.set_rect(rect)
 
     def _on_release(self):

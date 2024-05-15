@@ -11,7 +11,7 @@ class MainGame(Game):
 
         super().__init__(
             DisplayHandler(
-                display=self.display,
+                display=PygameSurfaceAdapter.from_surface(self.display),
                 aspect_ratio=(16, 9),
                 render_size=(480, 270)
             ),

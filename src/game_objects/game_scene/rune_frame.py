@@ -5,7 +5,7 @@ class GameSceneRuneFrame(AbstractGameObject):
     _sprite_file_path = 'src/assets/sprites/game_scene/rune_frame.png'
 
     def __init__(self, *args, rune_inventory_user=None, **kwargs):
-        AbstractGameObject.__init__(self, *args, **kwargs, rect=pygame.Rect(64, 8, 128, 128))
+        AbstractGameObject.__init__(self, *args, **kwargs, rect=PygameRectAdapter(64, 8, 128, 128))
 
         self.rune_inventory_user = rune_inventory_user
 
@@ -14,7 +14,7 @@ class GameSceneRuneFrame(AbstractGameObject):
         slot_positions = ((32, 16), (80, 16), (40, 40), (72, 40), (16, 56), (56, 56), (96, 56), (56, 76), (32, 96), (80, 96))
 
         self._rune_slots = [
-            RuneSlot(self, rect=pygame.Rect(*pos, 16, 16), rune_inventory_user=rune_inventory_user)
+            RuneSlot(self, rect=PygameRectAdapter(*pos, 16, 16), rune_inventory_user=rune_inventory_user)
             for pos in slot_positions
         ]
         for slot in self._rune_slots:
