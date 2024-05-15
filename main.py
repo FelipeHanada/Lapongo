@@ -6,8 +6,8 @@ from src.scenes.game_scene import GameScene
 
 class MainGame(Game):
     def __init__(self):
-        self.display = pygame.display.set_mode((800, 600))
-        #self.display = pygame.display.set_mode(flags=pygame.FULLSCREEN)
+        #self.display = pygame.display.set_mode((1440, 810))
+        self.display = pygame.display.set_mode(flags=pygame.FULLSCREEN)
 
         super().__init__(
             DisplayHandler(
