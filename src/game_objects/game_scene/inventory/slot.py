@@ -17,8 +17,8 @@ class Slot(AbstractGameObject):
 
     def set_item(self, item: AbstractGameObject):
         self._item = item
-        self.add_child_game_object(item)
-    
+        item.set_parent(self)
+
     def get_item(self):
         return self._item
     

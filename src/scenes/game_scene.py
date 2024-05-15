@@ -16,5 +16,3 @@ class GameScene(AbstractScene):
         self.add_scene_game_object(GameSceneEnemy, priority=1)
         self.add_scene_game_object(GameSceneRuneFrame, rune_inventory_user=rune_inventory_user, priority=1)
         self.add_scene_game_object(GameSceneShop, rune_inventory_user=rune_inventory_user, priority=1)
-
-        self.print_scene_tree()

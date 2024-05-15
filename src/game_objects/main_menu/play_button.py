@@ -19,14 +19,10 @@ class MainMenuPlayButton(AbstractGameObject):
         
         self.sprite_2d = self.add_component(Sprite2D(self, self._button_released_sprite))
 
-        self.mouse_listener = self.add_component(MouseListener2(parent=self.sprite_2d, rect=self.get_absolute_rect()))
+        self.mouse_listener = self.add_component(MouseListener(self.sprite_2d, rect=self.get_absolute_rect()))
         self.mouse_listener.on_pressed_in_rect(1, self.on_pressed)
         self.mouse_listener.on_released_in_rect(1, self.on_released)
         self.mouse_listener.on_release_in_rect(1, self.on_release)
-
-        print('SPRITE2D:', self.sprite_2d, self.sprite_2d.get_parent(), self.sprite_2d.get_parent_scene())
-        print(self.sprite_2d.get_children())
-        print('MOUSE LISTENER:', self.mouse_listener, self.mouse_listener.get_parent(), self.mouse_listener.get_parent_scene())
 
     def on_pressed(self):
         self.sprite_2d.set_image(self._button_pressed_sprite)
@@ -36,11 +32,3 @@ class MainMenuPlayButton(AbstractGameObject):
 
     def on_release(self):
         self.send_message(MainMenuPlayButtonOnClick(self), SendMessageTargetEnum.ROOT)
-
-
-class MouseListener2(MouseListener):
-    def __init__(self, *args, **kwargs):
-        print('MOUSE LISTENER 2:', args, kwargs)
-        MouseListener.__init__(self, *args, **kwargs)
-        
-        print(self.get_parent(), self.get_parent_scene())
