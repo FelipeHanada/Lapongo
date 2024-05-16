@@ -20,5 +20,6 @@ class MainGame(pgf.Game):
         self.add_scene('main_menu', pgf.DefaultSceneFactory(MainMenuScene, self))
         self.add_scene('game', pgf.DefaultSceneFactory(GameScene, self))
 
+
 if __name__ == '__main__':
     MainGame().run(first_scene='main_menu')

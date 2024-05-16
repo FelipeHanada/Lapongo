@@ -3,7 +3,7 @@ from ..slot import Slot
 
 
 class ShopSlot(Slot):
-    _sprite_file_path = 'src/assets/sprites/game_scene/shop/shop_slot.png'
+    _sprite_file_path = 'src/assets/sprites/game_scene/inventory/shop_slot.png'
 
     def __init__(self, *args, rune_inventory_user=None, **kwargs):
         Slot.__init__(self, *args, **kwargs)
