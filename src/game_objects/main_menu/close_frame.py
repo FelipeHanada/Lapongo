@@ -1,12 +1,12 @@
 import pgframework as pgf
 
 
-class MainMenuCloseFrame(pgf.AbstractGameObject):
+class MainMenuCloseFrame(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/main_menu/close_frame/frame.png'
     _sprite_size = (128, 64)
 
     def __init__(self, *args, **kwargs):
-        pgf.AbstractGameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
+        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
 
@@ -25,15 +25,15 @@ class MainMenuCloseFrame(pgf.AbstractGameObject):
         self.set_visible(opened)
 
 
-class CloseFrameButton(pgf.AbstractGameObject):
+class CloseFrameButton(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/main_menu/close_frame/confirm_button.png'
     _sprite_size = (96, 14)
     _sprite_sheet = pgf.components.sprite2d.SpriteSheetGrid(_sprite_file_path, 1, 2, *_sprite_size)
     _button_released_sprite = _sprite_sheet.get_frame(0, 0)
     _button_pressed_sprite = _sprite_sheet.get_frame(0, 1)
 
-    def __init__(self, parent: pgf.AbstractGameObject, priority: int = 0):
-        pgf.AbstractGameObject.__init__(self, parent, priority=priority, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
+    def __init__(self, parent: pgf.GameObject, priority: int = 0):
+        pgf.GameObject.__init__(self, parent, priority=priority, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)

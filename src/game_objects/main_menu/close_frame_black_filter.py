@@ -1,9 +1,9 @@
 import pgframework as pgf
 
 
-class MainMenuCloseFrameBlackFilter(pgf.AbstractGameObject):
+class MainMenuCloseFrameBlackFilter(pgf.GameObject):
     def __init__(self, *args, **kwargs):
-        pgf.AbstractGameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 480, 270))
+        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 480, 270))
 
         image = pgf.PygameSurfaceAdapter((480, 270), pgf.surface_flags['SRCALPHA'])
         image.fill((0, 0, 0, 128))

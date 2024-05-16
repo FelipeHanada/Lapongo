@@ -5,7 +5,7 @@ class MainMenuPlayButtonOnClick(pgf.AbstractMessage):
     pass
 
 
-class MainMenuPlayButton(pgf.AbstractGameObject):
+class MainMenuPlayButton(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/main_menu/play_button.png'
     _sprite_size = (96, 24)
     _sprite_sheet = pgf.components.sprite2d.SpriteSheetGrid(_sprite_file_path, 1, 2, *_sprite_size)
@@ -14,7 +14,7 @@ class MainMenuPlayButton(pgf.AbstractGameObject):
 
     def __init__(self, *args, **kwargs):
         rect = pgf.PygameRectAdapter(0, 180, *self._sprite_size)
-        pgf.AbstractGameObject.__init__(self, *args, **kwargs, rect=rect)
+        pgf.GameObject.__init__(self, *args, **kwargs, rect=rect)
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
         
         self.sprite_2d = self.add_component(pgf.components.sprite2d.Sprite2D(self, self._button_released_sprite))

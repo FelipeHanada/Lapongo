@@ -1,14 +1,14 @@
 import pgframework as pgf
 
 
-class InventoryFrameWalletFrame(pgf.AbstractGameObject):
+class InventoryFrameWalletFrame(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/game_scene/inventory/wallet_frame.png'
     _sprite = pgf.PygameSurfaceAdapter.from_image(_sprite_file_path)
     _font_file_path = 'src/assets/fonts/alagard.ttf'
     _font = pgf.FontAdapter(_font_file_path, 12)
 
     def __init__(self, *args, **kwargs):
-        pgf.AbstractGameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(16, 96, 32, 16))
+        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(16, 96, 32, 16))
 
         self._sprite2d = self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite))
 

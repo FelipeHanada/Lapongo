@@ -1,9 +1,9 @@
 from pgframework import *
 
 
-class Slot(AbstractGameObject):
+class Slot(GameObject):
     def __init__(self, *args, show_debug=False, **kwargs):
-        AbstractGameObject.__init__(self, *args, **kwargs)
+        GameObject.__init__(self, *args, **kwargs)
         self._item = None
         self._show_debug = show_debug
 
@@ -15,7 +15,7 @@ class Slot(AbstractGameObject):
             surface.set_alpha(128)
             self.get_display_handler().draw(surface, rect.topleft)
 
-    def set_item(self, item: AbstractGameObject):
+    def set_item(self, item: GameObject):
         self._item = item
         item.set_parent(self)
 

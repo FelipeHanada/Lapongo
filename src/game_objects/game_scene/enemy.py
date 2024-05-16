@@ -1,13 +1,13 @@
 import pgframework as pgf
 
 
-class GameSceneEnemy(pgf.AbstractGameObject):
+class GameSceneEnemy(pgf.GameObject):
     _sprite_file_paths = {
         'frog': 'src/assets/sprites/characters/frog/frog_idle.png',
     }
 
     def __init__(self, *args, **kwargs):
-        pgf.AbstractGameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(336, 180, 32, 32))
+        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(336, 180, 32, 32))
 
         self.add_component(pgf.components.sprite2d.Sprite2DAnimated(self, self.get_idle_timed_flipbook('frog')))
 
