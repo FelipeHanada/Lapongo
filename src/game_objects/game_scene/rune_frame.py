@@ -9,7 +9,7 @@ class GameSceneRuneFrame(pgf.GameObject):
 
         self.rune_inventory_user = rune_inventory_user
 
-        self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
+        self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
 
         slot_positions = ((32, 16), (80, 16), (40, 40), (72, 40), (16, 56), (56, 56), (96, 56), (56, 76), (32, 96), (80, 96))
 
@@ -18,7 +18,7 @@ class GameSceneRuneFrame(pgf.GameObject):
             for pos in slot_positions
         ]
         for slot in self._rune_slots:
-            self.add_child_game_object(slot)
+            self.add_child(slot)
 
         from .runes.water_rune import WaterRune
         from .runes.air_rune import AirRune

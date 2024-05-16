@@ -10,12 +10,9 @@ class BagTrashCan(RuneSlot):
         RuneSlot.__init__(self, *args, rune_inventory_user=rune_inventory_user, rect=pgf.PygameRectAdapter(32, 40, 16, 16), **kwargs)
 
         self._sprite2d_go = pgf.GameObject()
-        self._sprite2d = self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite_sheet.get_frame(0, 0), priority=1))
+        self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_sheet.get_frame(0, 0), priority=1))
 
         self.mouse_listener.on_leave(self._on_leave)
-
-        self.keyboard_listener = self.add_component(pgf.components.keyboard_listener.KeyboardListener(self))
-        self.keyboard_listener.on_key_down(pgf.keys['space'], self.print_tree)
 
     def on_hover(self):
         super().on_hover()

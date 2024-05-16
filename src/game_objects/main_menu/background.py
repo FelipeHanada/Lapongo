@@ -10,4 +10,4 @@ class MainMenuBackground(GameObject):
     def __init__(self, *args, **kwargs):
         GameObject.__init__(self, *args, **kwargs, rect=PygameRectAdapter(0, 0, 480, 270))
 
-        self.add_component(components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed))
+        self.add_child(components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed))

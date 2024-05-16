@@ -8,13 +8,18 @@ class GameSceneRuneInventoryUser(pgf.GameObject):
         self._holding_rune = None
         self._last_rune_slot = None
 
-        self._mouse_listener = self.add_component(pgf.components.mouse_listener.MouseListener(self, rect=pgf.PygameRectAdapter(0, 0, 480, 270)))
+        self._mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, rect=pgf.PygameRectAdapter(0, 0, 480, 270)))
         self._mouse_listener.on_mouse_motion(self._on_mouse_motion)
         self._mouse_listener.on_release(1, self._on_release)
 
+        self.keyboard_listener = self.add_child(pgf.components.keyboard_listener.KeyboardListener(self))
+        self.keyboard_listener.on_key_down(pgf.keys['space'], lambda: print(self.get_children()))
+
+    def remove_child(self, child: 'AbstractSceneChild') -> None:
+        super().remove_child(child)
+
     def drop_rune(self):
         if self._holding_rune:
-            self.remove_child_game_object(self._holding_rune)
             self._holding_rune = None
             
             pgf.set_mouse_visible(True)
@@ -24,7 +29,7 @@ class GameSceneRuneInventoryUser(pgf.GameObject):
         rune_slot.remove_item()
 
         if self._holding_rune:
-            self.add_child_game_object(self._holding_rune)
+            self.add_child(self._holding_rune)
             
             self._last_rune_slot = rune_slot
             pgf.set_mouse_visible(False)

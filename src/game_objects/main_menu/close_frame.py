@@ -16,9 +16,9 @@ class MainMenuCloseFrame(pgf.GameObject):
         ))
         self.set_rect(rect)
 
-        self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
+        self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
 
-        self.add_child_game_object(CloseFrameButton(self, priority=1))
+        self.add_child(CloseFrameButton(self, priority=1))
 
     def set_opened(self, opened: bool):
         self.set_enabled(opened)
@@ -40,13 +40,13 @@ class CloseFrameButton(pgf.GameObject):
         rect.set_bottom(self.get_parent().get_rect().get_height() - 13)
         self.set_rect(rect)
 
-        self.sprite_2d = self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
+        self.sprite_2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
 
         self._mouse_listener = pgf.components.mouse_listener.MouseListener(self.sprite_2d, rect=self.get_absolute_rect())
         self._mouse_listener.on_pressed_in_rect(1, self.on_pressed)
         self._mouse_listener.on_released_in_rect(1, self.on_released)
         self._mouse_listener.on_release_in_rect(1, self.on_release)
-        self.add_component(self._mouse_listener)
+        self.add_child(self._mouse_listener)
 
     def on_pressed(self):
         self.sprite_2d.set_image(self._button_pressed_sprite)

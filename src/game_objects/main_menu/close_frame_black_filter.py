@@ -7,4 +7,4 @@ class MainMenuCloseFrameBlackFilter(pgf.GameObject):
 
         image = pgf.PygameSurfaceAdapter((480, 270), pgf.surface_flags['SRCALPHA'])
         image.fill((0, 0, 0, 128))
-        self.add_component(pgf.components.sprite2d.Sprite2D(self, image))
+        self.add_child(pgf.components.sprite2d.Sprite2D(self, image))

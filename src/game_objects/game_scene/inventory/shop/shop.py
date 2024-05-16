@@ -15,4 +15,4 @@ class InventoryFrameShop(pgf.GameObject):
         ]
 
         for slot in self._shop_slots:
-            self.add_child_game_object(slot)
+            self.add_child(slot)

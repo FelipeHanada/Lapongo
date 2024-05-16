@@ -15,4 +15,4 @@ class MainMenuTitleSign(pgf.GameObject):
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
         self.set_rect(rect)
 
-        self.add_component(pgf.components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed, offset=(0, 0)))
+        self.add_child(pgf.components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed, offset=(0, 0)))

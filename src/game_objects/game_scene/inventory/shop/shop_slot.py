@@ -10,9 +10,9 @@ class ShopSlot(Slot):
 
         self._rune_inventory_user = rune_inventory_user
 
-        self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, offset=(-2, -2)))
+        self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, offset=(-2, -2)))
 
-        self.mouse_listener = self.add_component(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
+        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
         self.mouse_listener.on_release_in_rect(1, self.buy)
 
     def buy(self):

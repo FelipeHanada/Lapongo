@@ -24,6 +24,6 @@ class Slot(GameObject):
     
     def remove_item(self):
         if self._item is not None:
-            self.remove_child_game_object(self._item)
+            self.remove_child(self._item)
 
         self._item = None

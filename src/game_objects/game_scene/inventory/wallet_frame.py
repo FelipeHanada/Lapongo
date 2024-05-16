@@ -10,7 +10,7 @@ class InventoryFrameWalletFrame(pgf.GameObject):
     def __init__(self, *args, **kwargs):
         pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(16, 96, 32, 16))
 
-        self._sprite2d = self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite))
+        self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite))
 
     def get_coins(self):
         return 123

@@ -7,7 +7,7 @@ class RuneSlot(Slot):
         Slot.__init__(self, *args, **kwargs)
         self._rune_inventory_user = rune_inventory_user
 
-        self.mouse_listener = self.add_component(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
+        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
         self.mouse_listener.on_press_in_rect(1, self.on_press)
         self.mouse_listener.on_hover(self.on_hover)
 
