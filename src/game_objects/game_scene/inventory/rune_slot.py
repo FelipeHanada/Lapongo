@@ -7,9 +7,9 @@ class RuneSlot(Slot):
         Slot.__init__(self, *args, **kwargs)
         self._rune_inventory_user = rune_inventory_user
 
-        mouse_listener = self.add_component(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
-        mouse_listener.on_press_in_rect(1, self._on_press)
-        mouse_listener.on_hover(self._on_hover)
+        self.mouse_listener = self.add_component(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
+        self.mouse_listener.on_press_in_rect(1, self._on_press)
+        self.mouse_listener.on_hover(self._on_hover)
 
     def _on_press(self):
         if self._rune_inventory_user is None:
@@ -19,7 +19,7 @@ class RuneSlot(Slot):
             self._rune_inventory_user.pick_rune(self)
 
     def _on_hover(self):
-        if pgf.get_mouse_pressed()[0]:
+        if self.mouse_listener.get_pressed(1):
             return
         
         if self._rune_inventory_user is None:
