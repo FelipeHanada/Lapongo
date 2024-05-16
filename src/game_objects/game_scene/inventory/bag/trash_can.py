@@ -14,6 +14,10 @@ class BagTrashCan(RuneSlot):
 
         self.mouse_listener.on_leave(self._on_leave)
 
+    def swap_rune_with_hand(self):
+        self.remove_item()
+        self.place_rune_from_hand()
+
     def on_hover(self):
         super().on_hover()
 

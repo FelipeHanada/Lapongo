@@ -15,10 +15,18 @@ class RuneSlot(Slot):
         if not self._rune_inventory_user.get_holding_rune():
             self._rune_inventory_user.pick_rune(self)
 
+    def place_rune_from_hand(self):
+        self.set_item(self._rune_inventory_user.get_holding_rune())
+        self._rune_inventory_user.drop_rune()
+
+    def swap_rune_with_hand(self):
+        self._rune_inventory_user.get_last_rune_slot().set_item(self.get_item())
+        self.place_rune_from_hand()
+
     def on_hover(self):
         if self._rune_inventory_user.get_holding_rune() and not self.mouse_listener.get_pressed(1):
             if self.get_item() is not None:
-                self._rune_inventory_user.get_last_rune_slot().set_item(self.get_item())
-            
-            self.set_item(self._rune_inventory_user.get_holding_rune())
-            self._rune_inventory_user.drop_rune()
+                self.swap_rune_with_hand()
+
+            else:
+                self.place_rune_from_hand()            

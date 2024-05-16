@@ -12,9 +12,6 @@ class GameSceneRuneInventoryUser(pgf.GameObject):
         self._mouse_listener.on_mouse_motion(self._on_mouse_motion)
         self._mouse_listener.on_release(1, self._on_release)
 
-        self.keyboard_listener = self.add_child(pgf.components.keyboard_listener.KeyboardListener(self))
-        self.keyboard_listener.on_key_down(pgf.keys['space'], lambda: print(self.get_children()))
-
     def remove_child(self, child: 'AbstractSceneChild') -> None:
         super().remove_child(child)
 
