@@ -1,5 +1,6 @@
 import pgframework as pgf
 from .bag_slot import BagSlot
+from .trash_can import BagTrashCan
 
 
 class InventoryFrameBag(pgf.AbstractGameObject):
@@ -18,3 +19,5 @@ class InventoryFrameBag(pgf.AbstractGameObject):
 
         for slot in self._bag_slots:
             self.add_child_game_object(slot)
+
+        self._trash_can = self.add_child_game_object(BagTrashCan(self, rune_inventory_user=rune_inventory_user))
