@@ -4,7 +4,7 @@ from .inventory.rune_slot import RuneSlot
 class GameSceneRuneFrame(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/game_scene/rune_frame.png'
 
-    def __init__(self, *args, rune_inventory_user=None, **kwargs):
+    def __init__(self, *args, rune_inventory_user, **kwargs):
         pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(64, 8, 128, 128))
 
         self.rune_inventory_user = rune_inventory_user
