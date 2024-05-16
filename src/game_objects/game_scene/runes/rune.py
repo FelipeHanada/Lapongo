@@ -1,8 +1,8 @@
-from pgframework import *
+import pgframework as pgf
 
 
-class Rune(AbstractGameObject):
+class Rune(pgf.AbstractGameObject):
     def __init__(self, sprite_file, *args, **kwargs):
-        AbstractGameObject.__init__(self, *args, **kwargs, rect=PygameRectAdapter(0, 0, 16, 16))
+        pgf.AbstractGameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 16, 16))
 
-        self.add_component(Sprite2D(self, sprite_file))
+        self.add_component(pgf.components.sprite2d.Sprite2D(self, sprite_file))

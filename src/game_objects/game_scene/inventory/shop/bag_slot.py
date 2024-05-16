@@ -1,4 +1,4 @@
-from pgframework import *
+import pgframework as pgf
 from ..rune_slot import RuneSlot
 
 
@@ -8,4 +8,4 @@ class BagSlot(RuneSlot):
     def __init__(self, *args, **kwargs):
         RuneSlot.__init__(self, *args, **kwargs)
 
-        self.add_component(Sprite2D(self, self._sprite_file_path, offset=(-2, -2)))
+        self.add_component(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, offset=(-2, -2)))
