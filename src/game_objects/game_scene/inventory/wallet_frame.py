@@ -8,7 +8,7 @@ class InventoryFrameWalletFrame(pgf.GameObject):
     _font = pgf.FontAdapter(_font_file_path, 12)
 
     def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(16, 96, 32, 16))
+        super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(16, 96, 32, 16))
 
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite))
 

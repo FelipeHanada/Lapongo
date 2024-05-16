@@ -10,7 +10,7 @@ class InventoryFrameBag(pgf.GameObject):
     )
 
     def __init__(self, *args, rune_inventory_user=None, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self._bag_slots = [
             BagSlot(self, rect=pgf.PygameRectAdapter(*pos, 16, 16), rune_inventory_user=rune_inventory_user)

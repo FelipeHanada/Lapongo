@@ -3,7 +3,7 @@ import pgframework as pgf
 
 class GameSceneRuneInventoryUser(pgf.GameObject):
     def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self._holding_rune = None
         self._last_rune_slot = None

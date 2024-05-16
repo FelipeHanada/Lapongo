@@ -1,21 +1,21 @@
-from pgframework import *
+import pgframework as pgf
 
 
-class Slot(GameObject):
+class Slot(pgf.GameObject):
     def __init__(self, *args, show_debug=False, **kwargs):
-        GameObject.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._item = None
         self._show_debug = show_debug
 
     def draw_callback(self) -> None:
         if self._show_debug:
             rect = self.get_absolute_rect()
-            surface = pygame.Surface(rect.size)
+            surface = pgf.PygameSurfaceAdapter(rect.size, pgf.surface_flags['SRCALPHA'])
             surface.fill((255, 0, 0))
             surface.set_alpha(128)
-            self.get_display_handler().draw(surface, rect.topleft)
+            self.get_display_handler().draw(surface, rect.get_position())
 
-    def set_item(self, item: GameObject):
+    def set_item(self, item: pgf.GameObject):
         self._item = item
         item.set_parent(self)
 

@@ -8,6 +8,6 @@ class GameSceneBackground(pgf.GameObject):
     _flipbook_timed = pgf.components.sprite2d.FlipBookTimed.get_from_flip_book(_flipbook, 0.4)
 
     def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 480, 270))
+        super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 480, 270))
 
         self.add_child(pgf.components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed))

@@ -9,9 +9,9 @@ class MainMenuTitleSign(pgf.GameObject):
     _flipbook_timed = pgf.components.sprite2d.FlipBookTimed.get_from_flip_book(_flipbook, 0.4)
 
     def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
+        super().__init__(*args, **kwargs)
 
-        rect = self.get_rect()
+        rect = pgf.PygameRectAdapter(0, 0, *self._sprite_size)
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
         self.set_rect(rect)
 

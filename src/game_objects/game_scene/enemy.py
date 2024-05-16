@@ -7,7 +7,7 @@ class GameSceneEnemy(pgf.GameObject):
     }
 
     def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(336, 180, 32, 32))
+        super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(336, 180, 32, 32))
 
         self.add_child(pgf.components.sprite2d.Sprite2DAnimated(self, self.get_idle_timed_flipbook('frog')))
 

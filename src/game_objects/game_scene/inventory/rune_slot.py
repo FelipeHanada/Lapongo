@@ -4,7 +4,7 @@ from .slot import Slot
 
 class RuneSlot(Slot):
     def __init__(self, *args, rune_inventory_user, **kwargs):
-        Slot.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._rune_inventory_user = rune_inventory_user
 
         self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, show_debug=True))

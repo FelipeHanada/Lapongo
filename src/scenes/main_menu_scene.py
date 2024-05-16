@@ -8,7 +8,7 @@ from src.game_objects.main_menu.close_frame import MainMenuCloseFrame
 
 class MainMenuScene(pgf.AbstractScene):
     def __init__(self, game: pgf.Game):
-        pgf.AbstractScene.__init__(self, game, (255, 255, 255))
+        super().__init__(game, (255, 255, 255))
 
         self.add_event_callback(pgf.events['KEYUP'], self._on_escape, {'key': pgf.keys['escape']})
 

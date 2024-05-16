@@ -7,7 +7,7 @@ class BagTrashCan(RuneSlot):
     _sprite_sheet = pgf.components.sprite2d.SpriteSheetGrid(_sprite_file_path, 1, 2, 16, 16)
 
     def __init__(self, *args, rune_inventory_user, **kwargs):
-        RuneSlot.__init__(self, *args, rune_inventory_user=rune_inventory_user, rect=pgf.PygameRectAdapter(32, 40, 16, 16), **kwargs)
+        super().__init__(*args, rune_inventory_user=rune_inventory_user, rect=pgf.PygameRectAdapter(32, 40, 16, 16), **kwargs)
 
         self._sprite2d_go = pgf.GameObject()
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_sheet.get_frame(0, 0)))

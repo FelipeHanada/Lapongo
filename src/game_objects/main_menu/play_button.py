@@ -13,9 +13,11 @@ class MainMenuPlayButton(pgf.GameObject):
     _button_pressed_sprite = _sprite_sheet.get_frame(0, 1)
 
     def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
         rect = pgf.PygameRectAdapter(0, 180, *self._sprite_size)
-        pgf.GameObject.__init__(self, *args, **kwargs, rect=rect)
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
+        self.set_rect(rect)
         
         self.sprite_2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._button_released_sprite))
 

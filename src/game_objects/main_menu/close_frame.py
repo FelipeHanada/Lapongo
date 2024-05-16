@@ -6,7 +6,7 @@ class MainMenuCloseFrame(pgf.GameObject):
     _sprite_size = (128, 64)
 
     def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
+        super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
 
@@ -33,7 +33,7 @@ class CloseFrameButton(pgf.GameObject):
     _button_pressed_sprite = _sprite_sheet.get_frame(0, 1)
 
     def __init__(self, parent: pgf.GameObject, priority: int = 0):
-        pgf.GameObject.__init__(self, parent, priority=priority, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
+        super().__init__(parent, priority=priority, rect=pgf.PygameRectAdapter(0, 0, *self._sprite_size))
         
         rect = self.get_rect()
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
