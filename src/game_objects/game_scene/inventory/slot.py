@@ -23,7 +23,7 @@ class Slot(AbstractGameObject):
         return self._item
     
     def remove_item(self):
-        item = self._item
-        self.remove_child_game_object(self._item)
+        if self._item is not None:
+            self.remove_child_game_object(self._item)
+
         self._item = None
-        return item

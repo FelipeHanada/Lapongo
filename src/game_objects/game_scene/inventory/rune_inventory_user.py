@@ -20,11 +20,13 @@ class GameSceneRuneInventoryUser(pgf.AbstractGameObject):
             pgf.set_mouse_visible(True)
 
     def pick_rune(self, rune_slot: 'RuneSlot'):
-        self._last_rune_slot = rune_slot
-        self._holding_rune = rune_slot.remove_item()
+        self._holding_rune = rune_slot.get_item()        
+        rune_slot.remove_item()
 
         if self._holding_rune:
             self.add_child_game_object(self._holding_rune)
+            
+            self._last_rune_slot = rune_slot
             pgf.set_mouse_visible(False)
         
         self._on_mouse_motion(pgf.get_mouse_pos())

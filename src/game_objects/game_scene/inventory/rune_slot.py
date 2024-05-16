@@ -19,13 +19,10 @@ class RuneSlot(Slot):
             self._rune_inventory_user.pick_rune(self)
 
     def _on_hover(self):
-        if self.mouse_listener.get_pressed(1):
-            return
-        
         if self._rune_inventory_user is None:
             return
 
-        if self._rune_inventory_user.get_holding_rune():
+        if self._rune_inventory_user.get_holding_rune() and not self.mouse_listener.get_pressed(1):
             if self.get_item() is not None:
                 self._rune_inventory_user.get_last_rune_slot().set_item(self.get_item())
             

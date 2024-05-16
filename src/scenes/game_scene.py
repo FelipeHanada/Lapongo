@@ -4,7 +4,7 @@ from src.game_objects.game_scene.player import GameScenePlayer
 from src.game_objects.game_scene.rune_frame import GameSceneRuneFrame
 from src.game_objects.game_scene.inventory.rune_inventory_user import GameSceneRuneInventoryUser
 from src.game_objects.game_scene.enemy import GameSceneEnemy
-from src.game_objects.game_scene.inventory.shop.shop import GameSceneShop
+from src.game_objects.game_scene.inventory.inventory_frame import GameSceneInventoryFrame
 
 class GameScene(AbstractScene):
     def __init__(self, game: Game):
@@ -15,4 +15,4 @@ class GameScene(AbstractScene):
         self.add_scene_game_object(GameScenePlayer, priority=1)
         self.add_scene_game_object(GameSceneEnemy, priority=1)
         self.add_scene_game_object(GameSceneRuneFrame, rune_inventory_user=rune_inventory_user, priority=1)
-        self.add_scene_game_object(GameSceneShop, rune_inventory_user=rune_inventory_user, priority=1)
+        self.add_scene_game_object(GameSceneInventoryFrame, rune_inventory_user=rune_inventory_user, priority=1)
