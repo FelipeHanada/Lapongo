@@ -20,10 +20,10 @@ class GameSceneRuneFrame(pgf.GameObject):
         for slot in self._rune_slots:
             self.add_child(slot)
 
-        from .runes.water_rune import WaterRune
-        from .runes.air_rune import AirRune
-        from .runes.fire_rune import FireRune
-        from .runes.earth_rune import EarthRune
+        from .rune.runes.water_rune import WaterRune
+        from .rune.runes.air_rune import AirRune
+        from .rune.runes.fire_rune import FireRune
+        from .rune.runes.earth_rune import EarthRune
         self._rune_slots[0].set_item(WaterRune(None))
         self._rune_slots[1].set_item(AirRune(None))
         self._rune_slots[2].set_item(FireRune(None))

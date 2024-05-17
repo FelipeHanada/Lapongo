@@ -1,4 +1,4 @@
-from .rune import Rune
+from ..rune import Rune
 
 
 class FireRune(Rune):
