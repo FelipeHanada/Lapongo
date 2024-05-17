@@ -41,7 +41,7 @@ class GameSceneRuneInventoryUser(pgf.GameObject):
 
     def _on_mouse_motion(self, pos):
         if self._holding_rune:
-            rect = self.get_display_handler().convert_rect_real_to_render(pgf.PygameRectAdapter(*pos, 0, 0))
+            rect = self.get_game().get_renderer().convert_rect_real_to_render(pgf.PygameRectAdapter(*pos, 0, 0))
             rect.move_ip(
                 -self._holding_rune.get_rect().get_width() // 2,
                 -self._holding_rune.get_rect().get_height() // 2

@@ -16,3 +16,6 @@ class MainMenuTitleSign(pgf.GameObject):
         self.set_rect(rect)
 
         self.add_child(pgf.components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed, offset=(0, 0)))
+
+    def draw_callback(self, renderer: pgf.Renderer) -> None:
+        return super().draw_callback(renderer)

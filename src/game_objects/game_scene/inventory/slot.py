@@ -7,13 +7,13 @@ class Slot(pgf.GameObject):
         self._item = None
         self._show_debug = show_debug
 
-    def draw_callback(self) -> None:
+    def draw_callback(self, renderer: pgf.Renderer) -> None:
         if self._show_debug:
             rect = self.get_absolute_rect()
             surface = pgf.PygameSurfaceAdapter(rect.size, pgf.surface_flags['SRCALPHA'])
             surface.fill((255, 0, 0))
             surface.set_alpha(128)
-            self.get_display_handler().draw(surface, rect.get_position())
+            renderer.draw_surface(surface, rect.get_position())
 
     def set_item(self, item: pgf.GameObject):
         self._item = item

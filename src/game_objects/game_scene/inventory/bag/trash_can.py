@@ -9,7 +9,6 @@ class BagTrashCan(RuneSlot):
     def __init__(self, *args, rune_inventory_user, **kwargs):
         super().__init__(*args, rune_inventory_user=rune_inventory_user, rect=pgf.PygameRectAdapter(32, 40, 16, 16), **kwargs)
 
-        self._sprite2d_go = pgf.GameObject()
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_sheet.get_frame(0, 0)))
 
         self.mouse_listener.on_leave(self._on_leave)
