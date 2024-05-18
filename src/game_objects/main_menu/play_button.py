@@ -21,7 +21,7 @@ class MainMenuPlayButton(pgf.GameObject):
         
         self.sprite_2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._button_released_sprite))
 
-        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self.sprite_2d, rect=self.get_absolute_rect()))
+        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
         self.mouse_listener.on_pressed_in_rect(1, self.on_pressed)
         self.mouse_listener.on_released_in_rect(1, self.on_released)
         self.mouse_listener.on_release_in_rect(1, self.on_release)
