@@ -42,7 +42,7 @@ class CloseFrameButton(pgf.GameObject):
 
         self.sprite_2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
 
-        self._mouse_listener = pgf.components.mouse_listener.MouseListener(self.sprite_2d, rect=self.get_absolute_rect())
+        self._mouse_listener = pgf.components.mouse_listener.MouseListener(self.sprite_2d, rect=pgf.PygameRectAdapter(0, 0, *self.get_rect().get_size()))
         self._mouse_listener.on_pressed_in_rect(1, self.on_pressed)
         self._mouse_listener.on_released_in_rect(1, self.on_released)
         self._mouse_listener.on_release_in_rect(1, self.on_release)

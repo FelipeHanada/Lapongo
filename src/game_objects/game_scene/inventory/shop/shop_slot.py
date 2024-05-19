@@ -12,7 +12,7 @@ class ShopSlot(Slot):
 
         self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, offset=(-2, -2)))
 
-        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, show_debug=True))
+        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, rect=pgf.PygameRectAdapter(0, 0, *self.get_rect().get_size()), draw_debug_rect=True))
         self.mouse_listener.on_release_in_rect(1, self.buy)
 
     def buy(self):

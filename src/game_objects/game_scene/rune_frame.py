@@ -1,6 +1,7 @@
 import pgframework as pgf
 from .inventory.rune_slot import RuneSlot
 
+
 class GameSceneRuneFrame(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/game_scene/rune_frame.png'
 
