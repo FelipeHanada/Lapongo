@@ -56,8 +56,8 @@ class RuneDescriptionFrame(pgf.GameObject):
 
         self._rune_slot = rune_slot
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, draw_absolute=True))
-        self._name_label = self.add_child(pgf.game_objects.label.Label(self, '', self._font_file_path, 8, (255, 255, 255), visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(6, 8, 84, 8), draw_debug_rect=True))
-        self._description_text = self.add_child(pgf.game_objects.text.Text(self, '', self._font_file_path, 6, (255, 255, 255), align='justify', align_vertical='center', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(6, 20, 84, 46), draw_debug_rect=True))
+        self._name_label = self.add_child(pgf.game_objects.label.Label(self, '', self._font_file_path, 8, (255, 255, 255), visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 8, 80, 8), draw_debug_rect=False))
+        self._description_text = self.add_child(pgf.game_objects.text.Text(self, '', self._font_file_path, 6, (255, 255, 255), align='justify', align_vertical='center', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 20, 80, 44), draw_debug_rect=False))
 
     def draw_callback(self, renderer: pgf.Renderer) -> None:
         rune = self._rune_slot.get_rune()
