@@ -18,7 +18,7 @@ class Rune(pgf.GameObject):
         return self._name
 
     def get_description(self):
-        description = f'<b><color rgb="(197, 152, 70)">Efeito de ativacao: </color></b>'
+        description = f'<color rgb="(197, 152, 70)">Efeito de ativacao: </color>'
         description += f'{self._activation_effect.get_description()}<br>'
 
         return description
