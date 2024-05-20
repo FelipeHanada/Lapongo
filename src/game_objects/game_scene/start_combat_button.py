@@ -15,7 +15,7 @@ class GameSceneStartCombatButton(pgf.GameObject):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        rect = pgf.PygameRectAdapter(0, 156, *self._sprite_size)
+        rect = pgf.PygameRectAdapter(0, 160, *self._sprite_size)
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
         self.set_rect(rect)
         
