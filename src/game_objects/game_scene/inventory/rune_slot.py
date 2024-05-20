@@ -15,8 +15,13 @@ class RuneSlot(Slot):
         self.mouse_listener.on_hover(self.on_hover)
         self.mouse_listener.on_unhover(self.on_mouse_unhover)
 
+        self.locked = False
+
     def get_rune(self) -> Rune:
         return self.get_item()
+    
+    def set_locked(self, locked: bool):
+        self.locked = locked
 
     def place_rune_from_hand(self):
         self.set_item(self._rune_inventory_user.get_holding_rune())
@@ -27,14 +32,14 @@ class RuneSlot(Slot):
         self.place_rune_from_hand()
 
     def on_press(self):
-        if not self._rune_inventory_user.get_holding_rune():
+        if not self._rune_inventory_user.get_holding_rune() and not self.locked:
             self._rune_inventory_user.pick_rune(self)
 
     def on_hover(self):
         if self._rune_inventory_user.get_holding_rune():
             self._description_frame.set_visible(False)
 
-            if not self.mouse_listener.get_pressed(1):
+            if not self.mouse_listener.get_pressed(1) and not self.locked:
                 if self.get_item() is not None:
                     self.swap_rune_with_hand()
 
@@ -56,7 +61,7 @@ class RuneDescriptionFrame(pgf.GameObject):
 
         self._rune_slot = rune_slot
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, draw_absolute=True))
-        self._name_label = self.add_child(pgf.game_objects.label.Label(self, '', self._font_file_path, 8, (197, 152, 70), visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 8, 80, 8), draw_debug_rect=False))
+        self._name_label = self.add_child(pgf.game_objects.label.Label(self, '', self._font_file_path, 8, (197, 152, 70), align='center', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 8, 80, 8), draw_debug_rect=False))
         self._description_text = self.add_child(pgf.game_objects.text.Text(self, '', self._font_file_path, 6, (255, 255, 255), align='justify', align_vertical='center', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 20, 80, 44), draw_debug_rect=False))
 
     def draw_callback(self, renderer: pgf.Renderer) -> None:

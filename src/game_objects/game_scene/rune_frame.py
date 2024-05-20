@@ -29,3 +29,10 @@ class GameSceneRuneFrame(pgf.GameObject):
         # self._rune_slots[1].set_item(AirRune(None))
         # self._rune_slots[2].set_item(FireRune(None))
         # self._rune_slots[3].set_item(EarthRune(None))
+
+    def get_rune_slots(self):
+        return self._rune_slots
+    
+    def set_locked(self, locked: bool):
+        for slot in self._rune_slots:
+            slot.set_locked(locked)
