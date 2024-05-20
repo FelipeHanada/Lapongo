@@ -1,9 +1,13 @@
-class RuneEffect:
-    def __init__(self):
-        pass
+from typing import Callable
 
-    def activate(self, rune: 'Rune') -> None:
-        pass
+
+class RuneEffect:
+    def __init__(self, activate: Callable[[], None], description: str):
+        self._activate: Callable[[], None] = activate
+        self._description: str = description
+
+    def get_activate_callback(self) -> Callable[[], None]:
+        return self._activate
 
     def get_description(self) -> str:
-        pass
+        return self._description

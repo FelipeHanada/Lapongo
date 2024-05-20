@@ -26,6 +26,6 @@ class GameSceneRuneFrame(pgf.GameObject):
         from .rune.runes.fire_rune import FireRune
         from .rune.runes.earth_rune import EarthRune
         self._rune_slots[0].set_item(WaterRune(None))
-        self._rune_slots[1].set_item(AirRune(None))
-        self._rune_slots[2].set_item(FireRune(None))
-        self._rune_slots[3].set_item(EarthRune(None))
+        # self._rune_slots[1].set_item(AirRune(None))
+        # self._rune_slots[2].set_item(FireRune(None))
+        # self._rune_slots[3].set_item(EarthRune(None))
