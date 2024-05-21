@@ -21,10 +21,3 @@ class RuneEffect2:
         #self._on_
 
         self._description: str = description
-
-    def get_activate_callback(self) -> Callable[[], None]:
-        return self._activate
-
-    def get_description(self) -> str:
-        return self._description
-

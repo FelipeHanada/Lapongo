@@ -1,12 +1,14 @@
 import pgframework as pgf
 from src.game_objects.game_scene.background import GameSceneBackground
-from src.game_objects.game_scene.player import GameScenePlayer
-from src.game_objects.game_scene.rune_frame import GameSceneRuneFrame
+from src.game_objects.game_scene.combat.player import GameScenePlayer
+from src.game_objects.game_scene.combat.enemy import GameSceneEnemy
+from src.game_objects.game_scene.combat.player_rune_frame import PlayerRuneFrame
+from src.game_objects.game_scene.combat.enemy_rune_frame import EnemyRuneFrame
 from src.game_objects.game_scene.inventory.rune_inventory_user import GameSceneRuneInventoryUser
-from src.game_objects.game_scene.enemy import GameSceneEnemy
 from src.game_objects.game_scene.inventory.inventory_frame import GameSceneInventoryFrame
 from src.game_objects.game_scene.start_combat_button import GameSceneStartCombatButton, GameSceneStartCombatButtonOnClick
 from src.game_objects.game_scene.phase_label import PhaseLabel
+from src.game_objects.game_scene.combat.combat_controller import GameSceneCombatController
 
 
 class GameScene(pgf.AbstractScene):
@@ -14,7 +16,7 @@ class GameScene(pgf.AbstractScene):
     COMBAT_PHASE = 1
 
     def __init__(self, game: pgf.Game):
-        super().__init__(game, (255, 255, 255))
+        super().__init__(game)
 
         self._current_game_phase = GameScene.BUY_PHASE
         self._current_round = 1
@@ -24,14 +26,13 @@ class GameScene(pgf.AbstractScene):
         self._player = self.add_scene_game_object(GameScenePlayer, priority=1)
         self._enemy = self.add_scene_game_object(GameSceneEnemy, priority=1, visible=False, enabled=False)
        
-        self._rune_frame = self.add_scene_game_object(GameSceneRuneFrame, sprite_file_path='src/assets/sprites/game_scene/rune_frame.png', rune_inventory_user=self._rune_inventory_user, priority=1)
-        self._rune_frame.set_rect(self._rune_frame.get_rect().move(64, 8))
-        self._enemy_rune_frame = self.add_scene_game_object(GameSceneRuneFrame, sprite_file_path='src/assets/sprites/characters/frog/frog_rune_frame.png', rune_inventory_user=self._rune_inventory_user, priority=1, visible=False, enabled=False)
-        self._enemy_rune_frame.set_rect(self._enemy_rune_frame.get_rect().move(288, 8))
-        self._enemy_rune_frame.set_locked(True)
+        self._player_rune_frame = self.add_scene_game_object(PlayerRuneFrame, self._rune_inventory_user, priority=1)
+        self._enemy_rune_frame = self.add_scene_game_object(EnemyRuneFrame, self._rune_inventory_user, priority=1, visible=False, enabled=False)
 
         self._inventory_frame = self.add_scene_game_object(GameSceneInventoryFrame, rune_inventory_user=self._rune_inventory_user, priority=1)
         self._start_combat_button = self.add_scene_game_object(GameSceneStartCombatButton, priority=1)
+
+        self._combat_controller = self.add_scene_game_object(GameSceneCombatController, self._player, self._player_rune_frame, self._enemy, self._enemy_rune_frame, priority=1)
 
         self._phase_label = self.add_scene_game_object(PhaseLabel, priority=1, rect=pgf.PygameRectAdapter(0, 138, 480, 20))
 
@@ -48,6 +49,9 @@ class GameScene(pgf.AbstractScene):
         self._current_game_phase = game_phase
 
     def start_combat_phase(self):
+        if self._player_rune_frame.get_occupied_rune_slots() == []:
+            return
+
         self.set_current_game_phase(GameScene.COMBAT_PHASE)
 
         self._current_game_phase = 'combat'
@@ -55,7 +59,7 @@ class GameScene(pgf.AbstractScene):
         self._enemy.set_visible(True)
         self._enemy.set_enabled(True)
 
-        self._rune_frame.set_locked(True)
+        self._player_rune_frame.set_locked(True)
         self._rune_inventory_user.set_enabled(False)
 
         self._enemy_rune_frame.set_visible(True)
@@ -69,13 +73,15 @@ class GameScene(pgf.AbstractScene):
 
         self._phase_label.set_phase('combate')
 
+        self._combat_controller.start()
+
     def start_buy_phase(self):
         self.set_current_game_phase(GameScene.BUY_PHASE)
 
         self._enemy.set_visible(False)
         self._enemy.set_enabled(False)
 
-        self._rune_frame.set_locked(False)
+        self._player_rune_frame.set_locked(False)
         self._rune_inventory_user.set_enabled(True)
 
         self._enemy_rune_frame.set_visible(False)
@@ -90,3 +96,5 @@ class GameScene(pgf.AbstractScene):
         self._current_round += 1
         self._phase_label.set_round(self._current_round)
         self._phase_label.set_phase('compras')
+
+        self._combat_controller.end()

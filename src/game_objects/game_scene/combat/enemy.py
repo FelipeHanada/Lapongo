@@ -1,7 +1,8 @@
 import pgframework as pgf
+from .combat_agent import CombatAgent
 
 
-class GameSceneEnemy(pgf.GameObject):
+class GameSceneEnemy(CombatAgent):
     _sprite_file_paths = {
         'frog': 'src/assets/sprites/characters/frog/frog_idle.png',
     }

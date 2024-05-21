@@ -3,16 +3,25 @@ from .rune_effects.rune_effect import RuneEffect
 
 
 class Rune(pgf.GameObject):
-    def __init__(self, sprite_file: str, name: str, description: str, activation_effect: RuneEffect, *args, **kwargs):
+    def __init__(self, sprite_file: str, name: str, description: str, activation_time: int, energy_cost: float, activation_effect: RuneEffect, *args, **kwargs):
         super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 16, 16))
-
-        self._activation_effect: RuneEffect = activation_effect
-        #self._rune_induction_effect: RuneEffect = rune_induction_effect
 
         self._name = name
         self._description = description
 
+        self._activation_time = activation_time
+        self._energy_cost = energy_cost
+
+        self._activation_effect: RuneEffect = activation_effect
+        self._rune_induction_effect: RuneEffect = None  # rune_induction_effect
+
         self.add_child(pgf.components.sprite2d.Sprite2D(self, sprite_file))
+
+    def get_activation_effect(self):
+        return self._activation_effect
+    
+    def get_rune_induction_effect(self):
+        return self._rune_induction_effect
 
     def get_name(self):
         return self._name
