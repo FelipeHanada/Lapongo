@@ -55,6 +55,9 @@ class GameScene(pgf.AbstractScene):
         self._current_game_phase = game_phase
 
     def on_start_combat_message(self, msg):
+        if self._player_rune_frame.get_occupied_rune_slots() == []:
+            return
+
         self.start_combat_phase()
         self._combat_controller.set_current_round(self._current_round)
         self._combat_controller.start()
@@ -68,9 +71,6 @@ class GameScene(pgf.AbstractScene):
         self.start_buy_phase()
 
     def start_combat_phase(self):
-        if self._player_rune_frame.get_occupied_rune_slots() == []:
-            return
-
         self.set_current_game_phase(GameScene.COMBAT_PHASE)
 
         self._current_game_phase = 'combat'
