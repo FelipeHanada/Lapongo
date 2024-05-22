@@ -1,7 +1,7 @@
 import pgframework as pgf
 
 
-class GameSceneRuneInventoryUser(pgf.GameObject):
+class RuneInventoryUser(pgf.GameObject):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -1,7 +1,8 @@
 import heapq
 from typing import Callable
 import pgframework as pgf
-from .combat_agent import CombatAgent
+from .player import Player
+from .enemy import Enemy
 from .combat_event import CombatEvent
 
 
@@ -15,7 +16,7 @@ class EndCombatMessage(pgf.AbstractMessage):
 
 
 class Fatigue(CombatEvent):
-    def __init__(self, player: CombatAgent, enemy: CombatAgent, start_t: int, t_between_ticks: int, fatigue_damage: Callable[[int], int], fatigue_energy_loss: Callable[[int], int]):
+    def __init__(self, player: Player, enemy: Enemy, start_t: int, t_between_ticks: int, fatigue_damage: Callable[[int], int], fatigue_energy_loss: Callable[[int], int]):
         def fatigue_callback(combat_controller: 'CombatController'):
 
             delta_t = combat_controller.get_t() - start_t
@@ -33,12 +34,15 @@ class Fatigue(CombatEvent):
 
 class CombatController(pgf.GameObject):
     _ticks_per_second = 5
+    _base_gold_per_round: Callable[[int], int] = lambda round: 10 + round * 5
 
-    def __init__(self, parent: pgf.GameObject, player: CombatAgent, enemy: CombatAgent, *args, **kwargs):
+    def __init__(self, parent: pgf.GameObject, player: Player, enemy: Enemy, *args, **kwargs):
         super().__init__(parent, *args, **kwargs, visible=False, enabled=False)
 
-        self._player: CombatAgent = player
-        self._enemy: CombatAgent = enemy
+        self._player: Player = player
+        self._enemy: Enemy = enemy
+
+        self._current_round = 1
 
         self._t: int = 0
         self._events: list = []
@@ -50,6 +54,12 @@ class CombatController(pgf.GameObject):
     
     def set_t(self, t):
         self._t = t
+
+    def get_current_round(self):
+        return self._current_round
+
+    def set_current_round(self, current_round):
+        self._current_round = current_round
 
     def add_event(self, event: CombatEvent):
         heapq.heappush(self._events, event)
@@ -84,13 +94,15 @@ class CombatController(pgf.GameObject):
         self._enemy.start()
         self.add_event(self._enemy.get_rune_activation_event(self._player, 5))
 
-        self.add_event(Fatigue(self._player, self._enemy, 100, 5, lambda t: t, lambda t: t))
+        self.add_event(Fatigue(self._player, self._enemy, 25, 5, lambda t: t, lambda t: t))
 
         self.set_enabled(True)
 
     def end(self):
         print('combat controller end')
         self.set_enabled(False)
+
+        self._player.add_leaves(CombatController._base_gold_per_round(self._current_round))
 
     def update_callback(self, delta_time: float, *args, **kwargs) -> None:
         self._elapsed_time += delta_time
@@ -104,5 +116,5 @@ class CombatController(pgf.GameObject):
         if self._player.get_life() <= 0:
             self.send_message(EndCombatMessage(self, 'enemy'), pgf.SendMessageTargetEnum.PARENT)
 
-        if self._enemy.get_life() <= 0:
+        elif self._enemy.get_life() <= 0:
             self.send_message(EndCombatMessage(self, 'player'), pgf.SendMessageTargetEnum.PARENT)

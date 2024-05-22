@@ -16,7 +16,7 @@ class PhaseLabel(pgf.game_objects.text.Text):
     def get_label(round, phase):
         return f'<color rgb="(187, 152, 70)">Rodada {round}</color><br>Fase de {phase.capitalize()}'
 
-    def set_round(self, round):
+    def set_current_round(self, round):
         self._current_round = round
         self.set_text(self.get_label(self._current_round, self._current_phase))
 

@@ -1,12 +1,12 @@
 import pgframework as pgf
 from src.game_objects.game_scene.background import GameSceneBackground
-from src.game_objects.game_scene.combat.player import GameScenePlayer
-from src.game_objects.game_scene.combat.enemy import GameSceneEnemy
+from src.game_objects.game_scene.combat.player import Player
+from src.game_objects.game_scene.combat.enemy import Enemy
 from src.game_objects.game_scene.combat.player_rune_frame import PlayerRuneFrame
 from src.game_objects.game_scene.combat.enemy_rune_frame import EnemyRuneFrame
-from src.game_objects.game_scene.inventory.rune_inventory_user import GameSceneRuneInventoryUser
-from src.game_objects.game_scene.inventory.inventory_frame import GameSceneInventoryFrame
-from src.game_objects.game_scene.start_combat_button import GameSceneStartCombatButton, GameSceneStartCombatButtonOnClick
+from src.game_objects.game_scene.inventory.rune_inventory_user import RuneInventoryUser
+from src.game_objects.game_scene.inventory.inventory_frame import InventoryFrame
+from src.game_objects.game_scene.start_combat_button import StartCombatButton, StartCombatButtonOnClick
 from src.game_objects.game_scene.phase_label import PhaseLabel
 from src.game_objects.game_scene.combat.combat_controller import CombatController, EndCombatMessage
 from src.game_objects.game_scene.combat.stats_frame.player_stats_frame import PlayerStatsFrame
@@ -24,18 +24,18 @@ class GameScene(pgf.AbstractScene):
         self._current_round = 1
 
         self.add_scene_game_object(GameSceneBackground, priority=0)
-        self._rune_inventory_user = self.add_scene_game_object(GameSceneRuneInventoryUser, priority=10)
+        self._rune_inventory_user = self.add_scene_game_object(RuneInventoryUser, priority=10)
 
         self._player_rune_frame = self.add_scene_game_object(PlayerRuneFrame, self._rune_inventory_user, priority=1)
-        self._player = self.add_scene_game_object(GameScenePlayer, self._player_rune_frame, priority=1)
+        self._player = self.add_scene_game_object(Player, self._player_rune_frame, priority=1)
         self._player_stats_frame = self.add_scene_game_object(PlayerStatsFrame, self._player, priority=1, visible=False)
 
         self._enemy_rune_frame = self.add_scene_game_object(EnemyRuneFrame, self._rune_inventory_user, priority=1, visible=False, enabled=False)
-        self._enemy = self.add_scene_game_object(GameSceneEnemy, self._enemy_rune_frame, priority=1, visible=False, enabled=False)
+        self._enemy = self.add_scene_game_object(Enemy, self._enemy_rune_frame, priority=1, visible=False, enabled=False)
         self._enemy_stats_frame = self.add_scene_game_object(EnemyStatsFrame, self._enemy, priority=1, visible=False)
 
-        self._inventory_frame = self.add_scene_game_object(GameSceneInventoryFrame, rune_inventory_user=self._rune_inventory_user, priority=1)
-        self._start_combat_button = self.add_scene_game_object(GameSceneStartCombatButton, priority=1)
+        self._inventory_frame = self.add_scene_game_object(InventoryFrame, self._player, rune_inventory_user=self._rune_inventory_user, priority=1)
+        self._start_combat_button = self.add_scene_game_object(StartCombatButton, priority=1)
 
         self._combat_controller = self.add_scene_game_object(CombatController, self._player, self._enemy, priority=1)
 
@@ -45,7 +45,7 @@ class GameScene(pgf.AbstractScene):
         self.keyboard_listener.on_key_down(pgf.keys['space'], self.print_scene_tree)
         self.keyboard_listener.on_key_down(pgf.keys['b'], lambda: self.start_buy_phase())
 
-        self.add_message_callback(GameSceneStartCombatButtonOnClick, self.on_start_combat_message)
+        self.add_message_callback(StartCombatButtonOnClick, self.on_start_combat_message)
         self.add_message_callback(EndCombatMessage, self.on_end_combat_message)
 
     def get_current_game_phase(self):
@@ -56,13 +56,14 @@ class GameScene(pgf.AbstractScene):
 
     def on_start_combat_message(self, msg):
         self.start_combat_phase()
+        self._combat_controller.set_current_round(self._current_round)
         self._combat_controller.start()
 
     def on_end_combat_message(self, msg: EndCombatMessage):
         self._combat_controller.end()
         
         print('Combat ended')
-        print('winner:', msg.winner)
+        print('winner:', msg.get_winner())
 
         self.start_buy_phase()
 
@@ -112,5 +113,5 @@ class GameScene(pgf.AbstractScene):
         self._start_combat_button.set_enabled(True)
 
         self._current_round += 1
-        self._phase_label.set_round(self._current_round)
+        self._phase_label.set_current_round(self._current_round)
         self._phase_label.set_phase('compras')

@@ -3,7 +3,7 @@ from .combat_agent import CombatAgent
 from .rune_frame import RuneFrame
 
 
-class GameSceneEnemy(CombatAgent):
+class Enemy(CombatAgent):
     _sprite_file_paths = {
         'frog': 'src/assets/sprites/characters/frog/frog_idle.png',
     }

@@ -1,11 +1,11 @@
 import pgframework as pgf
 
 
-class GameSceneStartCombatButtonOnClick(pgf.AbstractMessage):
+class StartCombatButtonOnClick(pgf.AbstractMessage):
     pass
 
 
-class GameSceneStartCombatButton(pgf.GameObject):
+class StartCombatButton(pgf.GameObject):
     _sprite_file_path = 'src/assets/sprites/game_scene/start_combat_button.png'
     _sprite_size = (24, 24)
     _sprite_sheet = pgf.components.sprite2d.SpriteSheetGrid(_sprite_file_path, 1, 2, *_sprite_size)
@@ -33,4 +33,4 @@ class GameSceneStartCombatButton(pgf.GameObject):
         self.sprite_2d.set_image(self._button_released_sprite)
 
     def on_release(self):
-        self.send_message(GameSceneStartCombatButtonOnClick(self), pgf.SendMessageTargetEnum.ROOT)
+        self.send_message(StartCombatButtonOnClick(self), pgf.SendMessageTargetEnum.ROOT)
