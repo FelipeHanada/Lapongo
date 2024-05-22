@@ -1,5 +1,6 @@
 import pgframework as pgf
 from .combat_agent import CombatAgent
+from .rune_frame import RuneFrame
 
 
 class GameSceneEnemy(CombatAgent):
@@ -7,8 +8,8 @@ class GameSceneEnemy(CombatAgent):
         'frog': 'src/assets/sprites/characters/frog/frog_idle.png',
     }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(336, 180, 32, 32))
+    def __init__(self, parent: pgf.GameObject, rune_frame: RuneFrame, *args, **kwargs):
+        super().__init__(parent, rune_frame, *args, **kwargs, rect=pgf.PygameRectAdapter(336, 180, 32, 32))
 
         self.add_child(pgf.components.sprite2d.Sprite2DAnimated(self, self.get_idle_timed_flipbook('frog')))
 

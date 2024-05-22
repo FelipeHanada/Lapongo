@@ -8,7 +8,7 @@ from src.game_objects.game_scene.inventory.rune_inventory_user import GameSceneR
 from src.game_objects.game_scene.inventory.inventory_frame import GameSceneInventoryFrame
 from src.game_objects.game_scene.start_combat_button import GameSceneStartCombatButton, GameSceneStartCombatButtonOnClick
 from src.game_objects.game_scene.phase_label import PhaseLabel
-from src.game_objects.game_scene.combat.combat_controller import GameSceneCombatController
+from src.game_objects.game_scene.combat.combat_controller import CombatController
 
 
 class GameScene(pgf.AbstractScene):
@@ -23,16 +23,17 @@ class GameScene(pgf.AbstractScene):
 
         self.add_scene_game_object(GameSceneBackground, priority=0)
         self._rune_inventory_user = self.add_scene_game_object(GameSceneRuneInventoryUser, priority=10)
-        self._player = self.add_scene_game_object(GameScenePlayer, priority=1)
-        self._enemy = self.add_scene_game_object(GameSceneEnemy, priority=1, visible=False, enabled=False)
-       
+
         self._player_rune_frame = self.add_scene_game_object(PlayerRuneFrame, self._rune_inventory_user, priority=1)
+        self._player = self.add_scene_game_object(GameScenePlayer, self._player_rune_frame, priority=1)
+
         self._enemy_rune_frame = self.add_scene_game_object(EnemyRuneFrame, self._rune_inventory_user, priority=1, visible=False, enabled=False)
+        self._enemy = self.add_scene_game_object(GameSceneEnemy, self._enemy_rune_frame, priority=1, visible=False, enabled=False)
 
         self._inventory_frame = self.add_scene_game_object(GameSceneInventoryFrame, rune_inventory_user=self._rune_inventory_user, priority=1)
         self._start_combat_button = self.add_scene_game_object(GameSceneStartCombatButton, priority=1)
 
-        self._combat_controller = self.add_scene_game_object(GameSceneCombatController, self._player, self._player_rune_frame, self._enemy, self._enemy_rune_frame, priority=1)
+        self._combat_controller = self.add_scene_game_object(CombatController, self._player, self._enemy, priority=1)
 
         self._phase_label = self.add_scene_game_object(PhaseLabel, priority=1, rect=pgf.PygameRectAdapter(0, 138, 480, 20))
 

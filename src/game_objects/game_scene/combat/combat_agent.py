@@ -1,9 +1,13 @@
 import pgframework as pgf
+from .rune_frame import RuneFrame
+from .combat_event import CombatEvent
 
 
 class CombatAgent(pgf.GameObject):
-    def __init__(self, *args, **kwargs):
-        pgf.GameObject.__init__(self, *args, **kwargs)
+    def __init__(self, parent: pgf.GameObject, rune_frame: RuneFrame, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+
+        self._rune_frame: RuneFrame = rune_frame
 
         self._life = 100
         self._max_life = 100
@@ -11,6 +15,9 @@ class CombatAgent(pgf.GameObject):
         self._energy = 100
         self._max_energy = 100
     
+    def get_rune_frame(self):
+        return self._rune_frame
+
     def get_life(self):
         return self._life
     
@@ -56,3 +63,27 @@ class CombatAgent(pgf.GameObject):
         if self._energy < 0:
             self._energy = 0
         return self._energy
+
+    def start(self):
+        self._life = self._max_life
+        self._energy = self._max_energy
+
+    def get_rune_activation_event(self, enemy: 'CombatAgent', low_energy_recovery_time: int) -> CombatEvent:
+        def event_activation_event_callback(combat_controller: 'CombatController'):
+            recovery_time = low_energy_recovery_time
+
+            slot = self.get_rune_frame().get_random_occupied_rune_slot()
+            if slot is not None:
+                rune = slot.get_rune()
+                
+                if rune.get_energy_cost() > self.get_energy():
+                    print('Not enough energy')
+
+                else:
+                    self.consume_energy(rune.get_energy_cost())
+                    rune.get_activation_effect().get_activate_callback()()            
+                    recovery_time = rune.get_activation_time()
+
+            combat_controller.add_event_after(recovery_time, event_activation_event_callback)
+
+        return CombatEvent(0, event_activation_event_callback)

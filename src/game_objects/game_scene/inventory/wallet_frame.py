@@ -18,5 +18,5 @@ class InventoryFrameWalletFrame(pgf.GameObject):
     def get_coins(self):
         return 123
 
-    def update_callback(self) -> None:
+    def update_callback(self, *args, **kwargs) -> None:
         self._label.set_text(str(self.get_coins()))

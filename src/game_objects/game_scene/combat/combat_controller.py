@@ -1,31 +1,22 @@
 import heapq
 import pgframework as pgf
 from .combat_agent import CombatAgent
-from .rune_frame import RuneFrame
+from .combat_event import CombatEvent
 
 
-class CombatEvent:
-    def __init__(self, t, callback):
-        self._t = t
-        self._callback = callback
+class CombatController(pgf.GameObject):
+    _ticks_per_second = 5
 
-    def get_t(self):
-        return self._t
-
-    def get_callback(self):
-        return self._callback
-
-class GameSceneCombatController(pgf.GameObject):
-    def __init__(self, player: CombatAgent, player_rune_frame, enemy: CombatAgent, enemy_rune_frame, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, parent: pgf.GameObject, player: CombatAgent, enemy: CombatAgent, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs, visible=False, enabled=False)
 
         self._player: CombatAgent = player
-        self._player_rune_frame: RuneFrame = player_rune_frame
         self._enemy: CombatAgent = enemy
-        self._enemy_rune_frame: RuneFrame = enemy_rune_frame
 
-        self._t = 0
-        self._events = []
+        self._t: int = 0
+        self._events: list = []
+
+        self._elapsed_time: float = 0
 
     def get_t(self):
         return self._t
@@ -34,30 +25,52 @@ class GameSceneCombatController(pgf.GameObject):
         self._t = t
 
     def add_event(self, event: CombatEvent):
-        heapq.heappush(self._events, (event.get_t(), event))
+        heapq.heappush(self._events, event)
 
     def add_event_at(self, t, callback):
+        print('add event at', t)
         self.add_event(CombatEvent(t, callback))
 
     def add_event_after(self, dt, callback):
+        print('add event after', dt, 'will happen at', self._t + dt)
         self.add_event(CombatEvent(self._t + dt, callback))
 
-    def get_next_event(self):
-        return heapq.heappop(self._events)[1] if self._events else None
+    def pop_next_event(self) -> CombatEvent:
+        return heapq.heappop(self._events)
+    
+    def peek_next_event(self) -> CombatEvent:
+        if self._events:
+            return self._events[0]
+        
+        return None
 
     def start(self):
         print('combat controller start')
         self._t = 0
         self._events = []
 
-        self.add_event_at(0, self._player_rune_frame.get_random_occupied_rune_slot().get_rune().get_activation_effect())
+        self._elapsed_time = 0
 
-        pass
+        self._player.start()
+        self.add_event(self._player.get_rune_activation_event(self._enemy, 5))
+
+        self._enemy.start()
+        self.add_event(self._enemy.get_rune_activation_event(self._player, 5))
+
+        self.set_enabled(True)
 
     def end(self):
         print('combat controller end')
+        self.set_enabled(False)
 
-        pass
+    def update_callback(self, delta_time: float, *args, **kwargs) -> None:
+        self._elapsed_time += delta_time
 
-    def update_callback(self) -> None:
-        pass
+        self.set_t(int(self._elapsed_time * self._ticks_per_second))
+
+        print(self.get_t(), self._elapsed_time)
+
+        while self.peek_next_event() and self.peek_next_event().get_t() <= self.get_t():
+            event = self.pop_next_event()
+            event.get_callback()(self)
+        
