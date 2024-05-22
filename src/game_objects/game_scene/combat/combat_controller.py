@@ -120,3 +120,5 @@ class CombatController(pgf.GameObject):
                     self.send_message(EndCombatMessage(self, 'enemy'), pgf.SendMessageTargetEnum.PARENT)
                 else:
                     self.send_message(EndCombatMessage(self, 'player'), pgf.SendMessageTargetEnum.PARENT)
+                
+                break
