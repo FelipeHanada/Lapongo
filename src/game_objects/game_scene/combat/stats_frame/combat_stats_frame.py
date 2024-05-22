@@ -8,10 +8,12 @@ class StatsFrame(pgf.GameObject):
     _energy_bar_sprite_file_path = 'src/assets/sprites/game_scene/combat/energy_bar.png'
 
     _health_bar_rect = pgf.PygameRectAdapter(3, 5, 64, 8)
-    _health_bar_label_rect = pgf.PygameRectAdapter(69, 5, 16, 8)
-
     _energy_bar_rect = pgf.PygameRectAdapter(3, 19, 64, 8)
-    _energy_bar_label_rect = pgf.PygameRectAdapter(69, 19, 16, 8)
+
+    _health_bar_label_rect = pgf.PygameRectAdapter(70, 6, 14, 6)
+    _energy_bar_label_rect = pgf.PygameRectAdapter(70, 20, 14, 6)
+
+    _font_file_path = 'src/assets/fonts/alagard.ttf'
 
     def __init__(self, parent: pgf.GameObject, combat_agent: CombatAgent, *args, fliped: bool = False, **kwargs):
         super().__init__(parent, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 88, 32))
@@ -24,6 +26,9 @@ class StatsFrame(pgf.GameObject):
         self._energy_bar_surface = pgf.PygameSurfaceAdapter.from_image(self._energy_bar_sprite_file_path)
 
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._stats_frame_surface))
+
+        self._health_bar_label = self.add_child(pgf.game_objects.label.Label(self, str(self._combat_agent.get_life()), self._font_file_path, 8, (255, 255, 255), align='center', rect=self._health_bar_label_rect))
+        self._energy_bar_label = self.add_child(pgf.game_objects.label.Label(self, str(self._combat_agent.get_energy()), self._font_file_path, 8, (255, 255, 255), align='center', rect=self._energy_bar_label_rect))
 
     def update_callback(self, delta_time: float) -> None:
         surface = self._stats_frame_surface.copy()
@@ -41,3 +46,6 @@ class StatsFrame(pgf.GameObject):
         surface.blit(health_bar, self._health_bar_rect)
         surface.blit(energy_bar, self._energy_bar_rect)
         self._sprite2d.set_image(surface)
+
+        self._health_bar_label.set_text(str(self._combat_agent.get_life()))
+        self._energy_bar_label.set_text(str(self._combat_agent.get_energy()))
