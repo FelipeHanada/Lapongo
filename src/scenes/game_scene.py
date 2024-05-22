@@ -8,7 +8,7 @@ from src.game_objects.game_scene.inventory.rune_inventory_user import GameSceneR
 from src.game_objects.game_scene.inventory.inventory_frame import GameSceneInventoryFrame
 from src.game_objects.game_scene.start_combat_button import GameSceneStartCombatButton, GameSceneStartCombatButtonOnClick
 from src.game_objects.game_scene.phase_label import PhaseLabel
-from src.game_objects.game_scene.combat.combat_controller import CombatController
+from src.game_objects.game_scene.combat.combat_controller import CombatController, EndCombatMessage
 from src.game_objects.game_scene.combat.stats_frame.player_stats_frame import PlayerStatsFrame
 from src.game_objects.game_scene.combat.stats_frame.enemy_stats_frame import EnemyStatsFrame
 
@@ -45,13 +45,26 @@ class GameScene(pgf.AbstractScene):
         self.keyboard_listener.on_key_down(pgf.keys['space'], self.print_scene_tree)
         self.keyboard_listener.on_key_down(pgf.keys['b'], lambda: self.start_buy_phase())
 
-        self.add_message_callback(GameSceneStartCombatButtonOnClick, lambda msg: self.start_combat_phase())
+        self.add_message_callback(GameSceneStartCombatButtonOnClick, self.on_start_combat_message)
+        self.add_message_callback(EndCombatMessage, self.on_end_combat_message)
 
     def get_current_game_phase(self):
         return self._current_game_phase
 
     def set_current_game_phase(self, game_phase):
         self._current_game_phase = game_phase
+
+    def on_start_combat_message(self, msg):
+        self.start_combat_phase()
+        self._combat_controller.start()
+
+    def on_end_combat_message(self, msg: EndCombatMessage):
+        self._combat_controller.end()
+        
+        print('Combat ended')
+        print('winner:', msg.winner)
+
+        self.start_buy_phase()
 
     def start_combat_phase(self):
         if self._player_rune_frame.get_occupied_rune_slots() == []:
@@ -60,7 +73,6 @@ class GameScene(pgf.AbstractScene):
         self.set_current_game_phase(GameScene.COMBAT_PHASE)
 
         self._current_game_phase = 'combat'
-
 
         self._rune_inventory_user.set_enabled(False)
         self._inventory_frame.set_visible(False)
@@ -79,8 +91,6 @@ class GameScene(pgf.AbstractScene):
         self._start_combat_button.set_enabled(False)
 
         self._phase_label.set_phase('combate')
-
-        self._combat_controller.start()
 
     def start_buy_phase(self):
         self.set_current_game_phase(GameScene.BUY_PHASE)
@@ -104,5 +114,3 @@ class GameScene(pgf.AbstractScene):
         self._current_round += 1
         self._phase_label.set_round(self._current_round)
         self._phase_label.set_phase('compras')
-
-        self._combat_controller.end()

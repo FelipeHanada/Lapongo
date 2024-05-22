@@ -1,7 +1,32 @@
 import heapq
+from typing import Callable
 import pgframework as pgf
 from .combat_agent import CombatAgent
 from .combat_event import CombatEvent
+
+
+class EndCombatMessage(pgf.AbstractMessage):
+    def __init__(self, sender: pgf.Sender, winner: str, *args, **kwargs):
+        super().__init__(sender, *args, **kwargs)
+        self._winner = winner
+    
+    def get_winner(self):
+        return self._winner
+
+
+class Fatigue(CombatEvent):
+    def __init__(self, player: CombatAgent, enemy: CombatAgent, start_t: int, t_between_ticks: int, fatigue_damage: Callable[[int], int], fatigue_energy_loss: Callable[[int], int]):
+        def fatigue_callback(combat_controller: 'CombatController'):
+
+            player.receive_damage(fatigue_damage(combat_controller.get_t() - start_t))
+            player.consume_energy(fatigue_energy_loss(combat_controller.get_t() - start_t))
+
+            enemy.receive_damage(fatigue_damage(combat_controller.get_t() - start_t))
+            enemy.consume_energy(fatigue_energy_loss(combat_controller.get_t() - start_t))
+
+            combat_controller.add_event_after(t_between_ticks, fatigue_callback)
+
+        super().__init__(start_t, fatigue_callback)
 
 
 class CombatController(pgf.GameObject):
@@ -57,6 +82,8 @@ class CombatController(pgf.GameObject):
         self._enemy.start()
         self.add_event(self._enemy.get_rune_activation_event(self._player, 5))
 
+        self.add_event(Fatigue(self._player, self._enemy, 100, 5, lambda t: t, lambda t: t))
+
         self.set_enabled(True)
 
     def end(self):
@@ -68,9 +95,12 @@ class CombatController(pgf.GameObject):
 
         self.set_t(int(self._elapsed_time * self._ticks_per_second))
 
-        print(self.get_t(), self._elapsed_time)
-
         while self.peek_next_event() and self.peek_next_event().get_t() <= self.get_t():
             event = self.pop_next_event()
             event.get_callback()(self)
-        
+
+        if self._player.get_life() <= 0:
+            self.send_message(EndCombatMessage(self, 'enemy'), pgf.SendMessageTargetEnum.PARENT)
+
+        if self._enemy.get_life() <= 0:
+            self.send_message(EndCombatMessage(self, 'player'), pgf.SendMessageTargetEnum.PARENT)
