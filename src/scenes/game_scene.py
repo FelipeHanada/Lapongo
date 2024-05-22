@@ -9,6 +9,7 @@ from src.game_objects.game_scene.inventory.inventory_frame import GameSceneInven
 from src.game_objects.game_scene.start_combat_button import GameSceneStartCombatButton, GameSceneStartCombatButtonOnClick
 from src.game_objects.game_scene.phase_label import PhaseLabel
 from src.game_objects.game_scene.combat.combat_controller import CombatController
+from src.game_objects.game_scene.combat.stats_frame.player_stats_frame import PlayerStatsFrame
 
 
 class GameScene(pgf.AbstractScene):
@@ -26,6 +27,7 @@ class GameScene(pgf.AbstractScene):
 
         self._player_rune_frame = self.add_scene_game_object(PlayerRuneFrame, self._rune_inventory_user, priority=1)
         self._player = self.add_scene_game_object(GameScenePlayer, self._player_rune_frame, priority=1)
+        self._player_stats_frame = self.add_scene_game_object(PlayerStatsFrame, self._player, priority=1, visible=False)
 
         self._enemy_rune_frame = self.add_scene_game_object(EnemyRuneFrame, self._rune_inventory_user, priority=1, visible=False, enabled=False)
         self._enemy = self.add_scene_game_object(GameSceneEnemy, self._enemy_rune_frame, priority=1, visible=False, enabled=False)
@@ -57,17 +59,18 @@ class GameScene(pgf.AbstractScene):
 
         self._current_game_phase = 'combat'
 
-        self._enemy.set_visible(True)
-        self._enemy.set_enabled(True)
 
-        self._player_rune_frame.set_locked(True)
         self._rune_inventory_user.set_enabled(False)
-
-        self._enemy_rune_frame.set_visible(True)
-        self._enemy_rune_frame.set_enabled(True)
-
         self._inventory_frame.set_visible(False)
         self._inventory_frame.set_enabled(False)
+
+        self._player_rune_frame.set_locked(True)
+        self._player_stats_frame.set_visible(True)
+
+        self._enemy.set_visible(True)
+        self._enemy.set_enabled(True)
+        self._enemy_rune_frame.set_visible(True)
+        self._enemy_rune_frame.set_enabled(True)
 
         self._start_combat_button.set_visible(False)
         self._start_combat_button.set_enabled(False)
@@ -79,17 +82,17 @@ class GameScene(pgf.AbstractScene):
     def start_buy_phase(self):
         self.set_current_game_phase(GameScene.BUY_PHASE)
 
-        self._enemy.set_visible(False)
-        self._enemy.set_enabled(False)
-
-        self._player_rune_frame.set_locked(False)
         self._rune_inventory_user.set_enabled(True)
-
-        self._enemy_rune_frame.set_visible(False)
-        self._enemy_rune_frame.set_enabled(False)
-
         self._inventory_frame.set_visible(True)
         self._inventory_frame.set_enabled(True)
+
+        self._player_rune_frame.set_locked(False)
+        self._player_stats_frame.set_visible(False)
+
+        self._enemy.set_visible(False)
+        self._enemy.set_enabled(False)
+        self._enemy_rune_frame.set_visible(False)
+        self._enemy_rune_frame.set_enabled(False)
 
         self._start_combat_button.set_visible(True)
         self._start_combat_button.set_enabled(True)
