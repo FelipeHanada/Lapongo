@@ -113,8 +113,10 @@ class CombatController(pgf.GameObject):
             event = self.pop_next_event()
             event.get_callback()(self)
 
-        if self._player.get_life() <= 0:
-            self.send_message(EndCombatMessage(self, 'enemy'), pgf.SendMessageTargetEnum.PARENT)
-
-        elif self._enemy.get_life() <= 0:
-            self.send_message(EndCombatMessage(self, 'player'), pgf.SendMessageTargetEnum.PARENT)
+            player_life = self._player.get_life()
+            enemy_life = self._enemy.get_life()
+            if player_life <= 0 or enemy_life <= 0:
+                if player_life <= enemy_life:
+                    self.send_message(EndCombatMessage(self, 'enemy'), pgf.SendMessageTargetEnum.PARENT)
+                else:
+                    self.send_message(EndCombatMessage(self, 'player'), pgf.SendMessageTargetEnum.PARENT)
