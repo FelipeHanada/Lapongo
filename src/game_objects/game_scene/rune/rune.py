@@ -74,8 +74,8 @@ class Rune(pgf.GameObject):
             description += f'<color rgb="(197, 152, 70)">Efeito de ativacao: </color>'
             description += f'{self._activation_effect.get_description()}<br>'
 
-        if self._rune_induction_effect is not None:
+        if self._induction_effect is not None:
             description += f'<color rgb="(197, 152, 70)">Efeito de inducao: </color>'
-            description += f'{self._rune_induction_effect.get_description()}<br>'
+            description += f'{self._induction_effect.get_description()}<br>'
 
         return description
