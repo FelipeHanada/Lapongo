@@ -8,5 +8,5 @@ class PlayerRuneFrame(RuneFrame):
         super().__init__(parent, self.sprite_file_path, rune_inventory_user, *args, **kwargs)
         self.set_rect(self.get_rect().move(64, 8))
 
-        from ..rune.runes.water_rune import WaterRune
+        from ..combat.rune.runes.water_rune import WaterRune
         self.get_rune_slots()[0].set_item(WaterRune(None))

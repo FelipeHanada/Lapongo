@@ -1,6 +1,6 @@
 import pgframework as pgf
 from .slot import Slot
-from ..rune.rune import Rune
+from ..combat.rune.rune import Rune
 
 
 class RuneSlot(Slot):

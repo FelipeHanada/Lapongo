@@ -1,6 +1,6 @@
 import pgframework as pgf
 from .combat_agent import CombatAgent
-from .rune_frame import RuneFrame
+from .player_rune_frame import PlayerRuneFrame
 
 
 class Player(CombatAgent):
@@ -9,7 +9,7 @@ class Player(CombatAgent):
     _flipbook = _sprite_sheet.get_flip_book_from_pack(4, True)
     _flipbook_timed = pgf.components.sprite2d.FlipBookTimed.get_from_flip_book(_flipbook, 0.4)
 
-    def __init__(self, parent: pgf.GameObject, rune_frame: RuneFrame, *args, **kwargs):
+    def __init__(self, parent: pgf.GameObject, rune_frame: PlayerRuneFrame, *args, **kwargs):
         super().__init__(parent, rune_frame, *args, **kwargs, rect=pgf.PygameRectAdapter(112, 180, 32, 32))
 
         self._leaves = 0
