@@ -1,11 +1,10 @@
-from .rune_effect import RuneEffect
+from ..effect import Effect
 
 
-class CauseDamageEffect(RuneEffect):
+class CauseDamageEffect(Effect):
     def __init__(self, damage: int):
-        super().__init__(f'Causa {damage} de dano.')
         self._damage = damage
-        self.set_on_activation_callback(self.cause_damage)
+        super().__init__(self.cause_damage)
 
     def cause_damage(self, combat_controller: 'CombatController', agent: 'CombatAgent', target: 'CombatAgent'):
         print(f'causou {self._damage} de dano.')

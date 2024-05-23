@@ -1,33 +1,31 @@
-from typing import Callable
+from .effect import Effect
 
 
 class RuneEffect:
     def __init__(self, description: str):
-        self._on_combat_start: Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None] = None
-        self._on_combat_end: Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None] = None
-        self._on_activation: Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None] = None
-        #self._on_
+        self._combat_start_effect: Effect = None
+        self._combat_end_effect: Effect = None
+        self._activation_effect: Effect = None
 
         self._description: str = description
 
-    def get_on_activation_callback(self) -> Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None]:
+    def get_activation_effect(self) -> Effect:
         return self._on_activation
 
-    def get_on_combat_start_callback(self) -> Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None]:
+    def get_combat_start_effect(self) -> Effect:
         return self._on_combat_start
-    
-    def get_on_combat_end_callback(self) -> Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None]:
-        return self._on_combat_end
-    
-    def set_on_activation_callback(self, callback: Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None]):
-        self._on_activation = callback
 
-    def set_on_combat_start_callback(self, callback: Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None]):
-        self._on_combat_start = callback
-    
-    def set_on_combat_end_callback(self, callback: Callable[['CombatController', 'CombatAgent', 'CombatAgent'], None]):
-        self._on_combat_end = callback
-    
+    def get_combat_end_effect(self) -> Effect:
+        return self._on_combat_end
+
+    def set_activation_effect(self, rune_effect: Effect):
+        self._on_activation = rune_effect
+
+    def set_combat_start_effect(self, rune_effect: Effect):
+        self._on_combat_start = rune_effect
+
+    def set_combat_end_effect(self, rune_effect: Effect):
+        self._on_combat_end = rune_effect
+
     def get_description(self) -> str:
         return self._description
-

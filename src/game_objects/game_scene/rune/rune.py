@@ -17,24 +17,28 @@ class Rune(pgf.GameObject):
 
         self.add_child(pgf.components.sprite2d.Sprite2D(self, sprite_file))
 
-    def get_activation_time(self):
+    def get_activation_time(self) -> int:
         return self._activation_time
     
-    def get_energy_cost(self):
+    def get_energy_cost(self) -> int:
         return self._energy_cost
 
-    def get_activation_effect(self):
+    def get_activation_effect(self) -> RuneEffect:
         return self._activation_effect
     
-    def get_rune_induction_effect(self):
+    def get_rune_induction_effect(self) -> RuneEffect:
         return self._rune_induction_effect
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self._name
 
-    def get_description(self):
+    def get_description(self) -> str:
         description = f'{self._description}<br>'
         description += f'<br>'
+        description += f'<color rgb="(197, 152, 70)">Custo de energia: </color>'
+        description += f'{self._energy_cost}<br>'
+        description += f'<color rgb="(197, 152, 70)">Tempo de ativacao: </color>'
+        description += f'{self._activation_time}<br>'
         description += f'<color rgb="(197, 152, 70)">Efeito de ativacao: </color>'
         description += f'{self._activation_effect.get_description()}<br>'
 

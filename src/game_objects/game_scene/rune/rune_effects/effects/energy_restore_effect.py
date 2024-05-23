@@ -1,7 +1,7 @@
-from .rune_effect import RuneEffect
+from ..effect import Effect
 
 
-class EnergyRestoreEffect(RuneEffect):
+class EnergyRestoreEffect(Effect):
     def __init__(self, energy: int):
         super().__init__(self.restore_energy, f'Recupera {energy} de energia.')
         self._energy = energy

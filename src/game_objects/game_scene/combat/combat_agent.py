@@ -81,7 +81,7 @@ class CombatAgent(pgf.GameObject):
 
                 else:
                     self.consume_energy(rune.get_energy_cost())
-                    activation_callback = rune.get_activation_effect().get_on_activation_callback()
+                    activation_callback = rune.get_activation_effect().get_activation_effect().get_callback()
                     activation_callback(combat_controller, self, enemy)
                     recovery_time = rune.get_activation_time()
 
