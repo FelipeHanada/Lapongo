@@ -13,7 +13,7 @@ class Rune(pgf.GameObject):
         self._energy_cost = energy_cost
 
         self._activation_effect: RuneEffect = activation_effect
-        self._rune_induction_effect: RuneEffect = None  # rune_induction_effect
+        self._induction_effect: RuneEffect = None  # rune_induction_effect
 
         self.add_child(pgf.components.sprite2d.Sprite2D(self, sprite_file))
 
@@ -26,8 +26,38 @@ class Rune(pgf.GameObject):
     def get_activation_effect(self) -> RuneEffect:
         return self._activation_effect
     
-    def get_rune_induction_effect(self) -> RuneEffect:
-        return self._rune_induction_effect
+    def get_induction_effect(self) -> RuneEffect:
+        return self._induction_effect
+    
+    def start(self, combat_controller: 'CombatController', self_agent: 'CombatAgent', other_agent: 'CombatAgent'):
+        activation_effect = self.get_activation_effect()
+        if activation_effect is not None:
+            rune_activation_start_effect = activation_effect.get_combat_start_effect()
+            
+            if rune_activation_start_effect is not None:
+                rune_activation_start_effect.get_callback()(combat_controller, self_agent, other_agent.get_opponent())
+        
+        induction_effect = self.get_induction_effect()
+        if induction_effect is not None:
+            rune_induction_start_effect = induction_effect.get_combat_start_effect()
+
+            if rune_induction_start_effect is not None:
+                rune_induction_start_effect.get_callback()(combat_controller, self_agent, other_agent.get_opponent())
+
+    def end(self, combat_controller: 'CombatController', self_agent: 'CombatAgent', other_agent: 'CombatAgent'):
+        activation_effect = self.get_activation_effect()
+        if activation_effect is not None:
+            rune_activation_end_effect = activation_effect.get_combat_end_effect()
+            
+            if rune_activation_end_effect is not None:
+                rune_activation_end_effect.get_callback()(combat_controller, self_agent, other_agent.get_opponent())
+        
+        induction_effect = self.get_induction_effect()
+        if induction_effect is not None:
+            rune_induction_end_effect = induction_effect.get_combat_end_effect()
+
+            if rune_induction_end_effect is not None:
+                rune_induction_end_effect.get_callback()(combat_controller, self_agent, other_agent.get_opponent())
 
     def get_name(self) -> str:
         return self._name

@@ -5,8 +5,8 @@ from .player import Player
 from .enemy import Enemy
 from .combat_event import CombatEvent
 from .combat_events.fatigue import Fatigue
-from .combat_events.energy_depletion import EnergyDepletion
-from .combat_events.health_depletion import HealthDepletion
+from .combat_events.passive_energy_regeneration import PassiveEnergyRegeneration
+from .combat_events.passive_health_regeneration import PassiveHealthRegeneration
 
 
 class EndCombatMessage(pgf.AbstractMessage):
@@ -74,15 +74,15 @@ class CombatController(pgf.GameObject):
 
         self._elapsed_time = 0
 
-        self._player.start()
+        self._player.start(self, self._enemy)
         self.add_event(self._player.get_rune_activation_event(self._enemy, 5))
 
-        self._enemy.start()
+        self._enemy.start(self, self._player)
         self.add_event(self._enemy.get_rune_activation_event(self._player, 5))
 
         self.add_event(Fatigue(self._player, self._enemy, 100, 5, lambda t: t, lambda t: t))
-        self.add_event(EnergyDepletion(self._player, self._enemy, 5))
-        self.add_event(HealthDepletion(self._player, self._enemy, 5))
+        self.add_event(PassiveEnergyRegeneration(self._player, self._enemy, 5))
+        self.add_event(PassiveHealthRegeneration(self._player, self._enemy, 5))
 
         self.set_enabled(True)
 

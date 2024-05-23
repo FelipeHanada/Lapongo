@@ -9,11 +9,13 @@ class CombatAgent(pgf.GameObject):
 
         self._rune_frame: RuneFrame = rune_frame
 
-        self._health = 100
-        self._max_health = 100
+        self._base_max_health = 100
+        self._max_health = self._base_max_health
+        self._health = self._max_health
 
-        self._energy = 100
-        self._max_energy = 100
+        self._base_max_energy = 100
+        self._max_energy = self._base_max_energy
+        self._energy = self._max_energy
 
         self._energy_depletion_rate = 1
         self._health_depletion_rate = 1
@@ -21,20 +23,26 @@ class CombatAgent(pgf.GameObject):
     def get_rune_frame(self):
         return self._rune_frame
 
-    def get_health(self):
-        return self._health
-    
+    def get_base_max_health(self):
+        return self._base_max_health
+
     def get_max_health(self):
         return self._max_health
+
+    def get_health(self):
+        return self._health
 
     def get_health_depletion_rate(self):
         return self._health_depletion_rate
 
-    def get_energy(self):
-        return self._energy
-    
+    def get_base_max_energy(self):
+        return self._base_max_energy
+
     def get_max_energy(self):
         return self._max_energy
+
+    def get_energy(self):
+        return self._energy
     
     def get_energy_depletion_rate(self):
         return self._energy_depletion_rate
@@ -73,9 +81,21 @@ class CombatAgent(pgf.GameObject):
             self._energy = 0
         return self._energy
 
-    def start(self):
+    def start(self, combat_controller: 'CombatController', other_agent: 'CombatAgent'):
+        self._max_health = self._base_max_health
+        self._max_energy = self._base_max_energy
+
+        for occupied_rune_slot in self._rune_frame.get_occupied_rune_slots():
+            rune = occupied_rune_slot.get_rune()
+            rune.start(combat_controller, self, other_agent)
+
         self._health = self._max_health
         self._energy = self._max_energy
+    
+    def end(self, combat_controller: 'CombatController', other_agent: 'CombatAgent'):
+        for occupied_rune_slot in self._rune_frame.get_occupied_rune_slots():
+            rune = occupied_rune_slot.get_rune()
+            rune.end(combat_controller, self, other_agent)
 
     def get_rune_activation_event(self, enemy: 'CombatAgent', low_energy_recovery_time: int) -> CombatEvent:
         def event_activation_event_callback(combat_controller: 'CombatController'):
