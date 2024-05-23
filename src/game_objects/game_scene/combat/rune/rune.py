@@ -4,7 +4,7 @@ from .rune_effects.rune_effect import RuneEffect
 
 class Rune(pgf.GameObject):
     def __init__(self, sprite_file: str, name: str, description: str, max_energy_bonus: int, activation_time: int, energy_cost: float, activation_effect: RuneEffect, *args, **kwargs):
-        super().__init__(*args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 16, 16))
+        super().__init__(None, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 16, 16))
 
         self._name = name
         self._description = description
@@ -45,6 +45,8 @@ class Rune(pgf.GameObject):
 
             if rune_induction_start_effect is not None:
                 rune_induction_start_effect.get_callback()(combat_controller, self_agent, other_agent.get_opponent())
+
+        self_agent.get_max_energy_attribute().add_flat_bonus(self._max_energy_bonus)
 
     def end(self, combat_controller: 'CombatController', self_agent: 'CombatAgent', other_agent: 'CombatAgent'):
         activation_effect = self.get_activation_effect()

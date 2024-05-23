@@ -1,4 +1,5 @@
 from .rune_frame import RuneFrame
+from .rune.rune_factory import RuneFactory
 
 
 class PlayerRuneFrame(RuneFrame):
@@ -8,5 +9,6 @@ class PlayerRuneFrame(RuneFrame):
         super().__init__(parent, self.sprite_file_path, rune_inventory_user, *args, **kwargs)
         self.set_rect(self.get_rect().move(64, 8))
 
-        from ..combat.rune.runes.water_rune import WaterRune
-        self.get_rune_slots()[0].set_item(WaterRune(None))
+        self.get_rune_slots()[0].set_item(RuneFactory.create_water_rune(1))
+        self.get_rune_slots()[1].set_item(RuneFactory.create_water_rune(2))
+        self.get_rune_slots()[2].set_item(RuneFactory.create_water_rune(3))

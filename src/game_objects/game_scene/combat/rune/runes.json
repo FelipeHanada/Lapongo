@@ -1,0 +1,16 @@
+{
+    "water_rune": {
+        "max_energy_bonus_level_scaling": [5, 10, 15],
+        "activation_rune_effect_appearance_rate": {
+            "cause_damage_on_activation": 1,
+            "restore_life_on_activation": 1,
+            "restore_energy_on_activation": 1
+        }
+    },
+    "fire_rune": {
+    },
+    "earth_rune": {
+    },
+    "air_rune": {
+    }
+}
