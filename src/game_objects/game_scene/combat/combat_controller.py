@@ -4,6 +4,9 @@ import pgframework as pgf
 from .player import Player
 from .enemy import Enemy
 from .combat_event import CombatEvent
+from .combat_events.fatigue import Fatigue
+from .combat_events.energy_depletion import EnergyDepletion
+from .combat_events.health_depletion import HealthDepletion
 
 
 class EndCombatMessage(pgf.AbstractMessage):
@@ -13,23 +16,6 @@ class EndCombatMessage(pgf.AbstractMessage):
     
     def get_winner(self):
         return self._winner
-
-
-class Fatigue(CombatEvent):
-    def __init__(self, player: Player, enemy: Enemy, start_t: int, t_between_ticks: int, fatigue_damage: Callable[[int], int], fatigue_energy_loss: Callable[[int], int]):
-        def fatigue_callback(combat_controller: 'CombatController'):
-
-            delta_t = combat_controller.get_t() - start_t
-
-            player.receive_damage(fatigue_damage(delta_t))
-            player.consume_energy(fatigue_energy_loss(delta_t))
-
-            enemy.receive_damage(fatigue_damage(delta_t))
-            enemy.consume_energy(fatigue_energy_loss(delta_t))
-
-            combat_controller.add_event_after(t_between_ticks, fatigue_callback)
-
-        super().__init__(start_t, fatigue_callback)
 
 
 class CombatController(pgf.GameObject):
@@ -94,7 +80,9 @@ class CombatController(pgf.GameObject):
         self._enemy.start()
         self.add_event(self._enemy.get_rune_activation_event(self._player, 5))
 
-        self.add_event(Fatigue(self._player, self._enemy, 25, 5, lambda t: t, lambda t: t))
+        self.add_event(Fatigue(self._player, self._enemy, 100, 5, lambda t: t, lambda t: t))
+        self.add_event(EnergyDepletion(self._player, self._enemy, 5))
+        self.add_event(HealthDepletion(self._player, self._enemy, 5))
 
         self.set_enabled(True)
 
@@ -113,10 +101,11 @@ class CombatController(pgf.GameObject):
             event = self.pop_next_event()
             event.get_callback()(self)
 
-            player_life = self._player.get_life()
-            enemy_life = self._enemy.get_life()
-            if player_life <= 0 or enemy_life <= 0:
-                if player_life <= enemy_life:
+            player_health = self._player.get_health()
+            enemy_health = self._enemy.get_health()
+
+            if player_health <= 0 or enemy_health <= 0:
+                if player_health <= enemy_health:
                     self.send_message(EndCombatMessage(self, 'enemy'), pgf.SendMessageTargetEnum.PARENT)
                 else:
                     self.send_message(EndCombatMessage(self, 'player'), pgf.SendMessageTargetEnum.PARENT)

@@ -9,32 +9,41 @@ class CombatAgent(pgf.GameObject):
 
         self._rune_frame: RuneFrame = rune_frame
 
-        self._life = 100
-        self._max_life = 100
+        self._health = 100
+        self._max_health = 100
 
         self._energy = 100
         self._max_energy = 100
-    
+
+        self._energy_depletion_rate = 1
+        self._health_depletion_rate = 1
+
     def get_rune_frame(self):
         return self._rune_frame
 
-    def get_life(self):
-        return self._life
+    def get_health(self):
+        return self._health
     
-    def get_max_life(self):
-        return self._max_life
-    
+    def get_max_health(self):
+        return self._max_health
+
+    def get_health_depletion_rate(self):
+        return self._health_depletion_rate
+
     def get_energy(self):
         return self._energy
     
     def get_max_energy(self):
         return self._max_energy
     
-    def set_life(self, life):
-        self._life = life
+    def get_energy_depletion_rate(self):
+        return self._energy_depletion_rate
+    
+    def set_health(self, health):
+        self._health = health
 
-    def set_max_life(self, max_life):
-        self._max_life = max_life
+    def set_max_health(self, max_health):
+        self._max_health = max_health
     
     def set_energy(self, energy):
         self._energy = energy
@@ -42,16 +51,16 @@ class CombatAgent(pgf.GameObject):
     def set_max_energy(self, max_energy):
         self._max_energy = max_energy
     
-    def restore_life(self, life):
-        self._life += life
-        if self._life > self._max_life:
-            self._life = self._max_life
+    def restore_health(self, health):
+        self._health += health
+        if self._health > self._max_health:
+            self._health = self._max_health
         
     def receive_damage(self, damage):
-        self._life -= damage
-        if self._life < 0:
-            self._life = 0
-        return self._life
+        self._health -= damage
+        if self._health < 0:
+            self._health = 0
+        return self._health
 
     def restore_energy(self, energy):
         self._energy += energy
@@ -65,7 +74,7 @@ class CombatAgent(pgf.GameObject):
         return self._energy
 
     def start(self):
-        self._life = self._max_life
+        self._health = self._max_health
         self._energy = self._max_energy
 
     def get_rune_activation_event(self, enemy: 'CombatAgent', low_energy_recovery_time: int) -> CombatEvent:

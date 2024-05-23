@@ -32,13 +32,13 @@ class StatsFrame(pgf.GameObject):
 
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._stats_frame_surface))
 
-        self._health_bar_label = self.add_child(pgf.game_objects.label.Label(self, str(self._combat_agent.get_life()), self._font_file_path, 8, (255, 255, 255), align='center', rect=self._health_bar_label_rect))
+        self._health_bar_label = self.add_child(pgf.game_objects.label.Label(self, str(self._combat_agent.get_health()), self._font_file_path, 8, (255, 255, 255), align='center', rect=self._health_bar_label_rect))
         self._energy_bar_label = self.add_child(pgf.game_objects.label.Label(self, str(self._combat_agent.get_energy()), self._font_file_path, 8, (255, 255, 255), align='center', rect=self._energy_bar_label_rect))
 
     def update_callback(self, delta_time: float) -> None:
         surface = self._stats_frame_surface.copy()
 
-        health_percentage = self._combat_agent.get_life() / self._combat_agent.get_max_life()
+        health_percentage = self._combat_agent.get_health() / self._combat_agent.get_max_health()
         health_bar_width = 2 + round((self._health_bar_surface.get_width() - 2) * health_percentage)
         health_bar = pgf.PygameSurfaceAdapter((health_bar_width, self._health_bar_surface.get_height()), pgf.surface_flags['SRCALPHA'])
         health_bar.blit(self._health_bar_surface, (0, 0))
@@ -54,5 +54,5 @@ class StatsFrame(pgf.GameObject):
         surface = surface.flip(self.flipped, False)
         self._sprite2d.set_image(surface)
 
-        self._health_bar_label.set_text(str(self._combat_agent.get_life()))
+        self._health_bar_label.set_text(str(self._combat_agent.get_health()))
         self._energy_bar_label.set_text(str(self._combat_agent.get_energy()))
