@@ -101,8 +101,8 @@ class CombatController(pgf.GameObject):
             event = self.pop_next_event()
             event.get_callback()(self)
 
-            player_health = self._player.get_health()
-            enemy_health = self._enemy.get_health()
+            player_health = self._player.get_current_health()
+            enemy_health = self._enemy.get_current_health()
 
             if player_health <= 0 or enemy_health <= 0:
                 if player_health <= enemy_health:

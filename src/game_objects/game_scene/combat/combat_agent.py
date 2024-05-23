@@ -1,6 +1,7 @@
 import pgframework as pgf
 from .rune_frame import RuneFrame
 from .combat_event import CombatEvent
+from .attributes.numeric_attribute import NumericAttribute
 
 
 class CombatAgent(pgf.GameObject):
@@ -9,88 +10,78 @@ class CombatAgent(pgf.GameObject):
 
         self._rune_frame: RuneFrame = rune_frame
 
-        self._base_max_health = 100
-        self._max_health = self._base_max_health
-        self._health = self._max_health
+        self._max_health = NumericAttribute(100)
+        self._current_health = self._max_health.get_value()
 
-        self._base_max_energy = 100
-        self._max_energy = self._base_max_energy
-        self._energy = self._max_energy
+        self._max_energy = NumericAttribute(100)
+        self._current_energy = self._max_energy.get_value()
 
-        self._energy_depletion_rate = 1
-        self._health_depletion_rate = 1
+        self._energy_regeneration_rate = NumericAttribute(1)
+        self._health_regeneration_rate = NumericAttribute(1)
 
     def get_rune_frame(self):
         return self._rune_frame
 
-    def get_base_max_health(self):
-        return self._base_max_health
+    def get_current_health(self) -> float:
+        return self._current_health
 
-    def get_max_health(self):
-        return self._max_health
+    def set_current_health(self, health):
+        self._current_health = health
 
-    def get_health(self):
-        return self._health
-
-    def get_health_depletion_rate(self):
-        return self._health_depletion_rate
-
-    def get_base_max_energy(self):
-        return self._base_max_energy
-
-    def get_max_energy(self):
-        return self._max_energy
-
-    def get_energy(self):
-        return self._energy
-    
-    def get_energy_depletion_rate(self):
-        return self._energy_depletion_rate
-    
-    def set_health(self, health):
-        self._health = health
-
-    def set_max_health(self, max_health):
-        self._max_health = max_health
-    
-    def set_energy(self, energy):
-        self._energy = energy
-    
-    def set_max_energy(self, max_energy):
-        self._max_energy = max_energy
-    
     def restore_health(self, health):
-        self._health += health
-        if self._health > self._max_health:
-            self._health = self._max_health
+        self._current_health += health
+        max_health = self._max_health.get_value()
+        if self._current_health > max_health:
+            self._current_health = max_health
         
     def receive_damage(self, damage):
-        self._health -= damage
-        if self._health < 0:
-            self._health = 0
-        return self._health
+        self._current_health -= damage
+        if self._current_health < 0:
+            self._current_health = 0
+        return self._current_health
 
+    def get_max_health_attribute(self) -> NumericAttribute:
+        return self._max_health
+
+    def get_health_regeneration_rate_attribute(self) -> NumericAttribute:
+        return self._health_regeneration_rate
+
+    def get_current_energy(self):
+        return self._current_energy
+    
+    def set_current_energy(self, energy):
+        self._current_energy = energy
+    
     def restore_energy(self, energy):
-        self._energy += energy
-        if self._energy > self._max_energy:
-            self._energy = self._max_energy
+        self._current_energy += energy
+        max_energy = self._max_energy.get_value()
+        if self._current_energy > max_energy:
+            self._current_energy = max_energy
     
     def consume_energy(self, energy):
-        self._energy -= energy
-        if self._energy < 0:
-            self._energy = 0
-        return self._energy
+        self._current_energy -= energy
+        if self._current_energy < 0:
+            self._current_energy = 0
+        return self._current_energy
+    
+    def get_max_energy_attribute(self) -> NumericAttribute:
+        return self._max_energy
+    
+    def get_energy_regeneration_rate_attribute(self) -> NumericAttribute:
+        return self._energy_regeneration_rate
 
     def start(self, combat_controller: 'CombatController', other_agent: 'CombatAgent'):
-        self._max_health = self._base_max_health
-        self._max_energy = self._base_max_energy
+        self._max_health.reset_bonuses()
+        self._max_energy.reset_bonuses()
+        self._health_regeneration_rate.reset_bonuses()
+        self._energy_regeneration_rate.reset_bonuses()
 
         for occupied_rune_slot in self._rune_frame.get_occupied_rune_slots():
             rune = occupied_rune_slot.get_rune()
             rune.start(combat_controller, self, other_agent)
 
-        self._health = self._max_health
-        self._energy = self._max_energy
+        self._current_health = self._max_health.get_value()
+        self._current_energy = self._max_energy.get_value()
     
     def end(self, combat_controller: 'CombatController', other_agent: 'CombatAgent'):
         for occupied_rune_slot in self._rune_frame.get_occupied_rune_slots():
@@ -105,7 +96,7 @@ class CombatAgent(pgf.GameObject):
             if slot is not None:
                 rune = slot.get_rune()
                 
-                if rune.get_energy_cost() > self.get_energy():
+                if rune.get_energy_cost() > self.get_current_energy():
                     print('Not enough energy')
 
                 else:
