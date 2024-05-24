@@ -10,8 +10,8 @@
         { "activation_time": 10, "energy_cost": 50, "life_restored_range": [30, 50] }
     ],
     "restore_energy_on_activation": [
-        { "activation_time": 10, "energy_cost": 10, "energy_restored_range": [5, 7] },
-        { "activation_time": 10, "energy_cost": 20, "energy_restored_range": [10, 15] },
-        { "activation_time": 10, "energy_cost": 50, "energy_restored_range": [30, 50] }
+        { "activation_time": 50, "energy_cost": 10, "energy_restored_range": [5, 7] },
+        { "activation_time": 75, "energy_cost": 20, "energy_restored_range": [10, 15] },
+        { "activation_time": 100, "energy_cost": 30, "energy_restored_range": [60, 90] }
     ]
 }

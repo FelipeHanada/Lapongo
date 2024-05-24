@@ -60,13 +60,14 @@ class RuneFactory:
         return chosen_effect
 
     @staticmethod
-    def create_water_rune(level: int):
+    def create_water_rune(level: int, activation_rune_effect_name: str = None):
         data = RuneFactory.runes_data['water_rune']
         max_energy_bonus_level_scaling = data['max_energy_bonus_level_scaling']
         max_energy_bonus = max_energy_bonus_level_scaling[level - 1]
 
-        activation_rune_effect_appearance_rate = data['activation_rune_effect_appearance_rate']
-        activation_rune_effect_name = RuneFactory.get_random_activation_rune_effect(activation_rune_effect_appearance_rate)
+        if activation_rune_effect_name is None:
+            activation_rune_effect_appearance_rate = data['activation_rune_effect_appearance_rate']
+            activation_rune_effect_name = RuneFactory.get_random_activation_rune_effect(activation_rune_effect_appearance_rate)
 
         activation_rune_effect, activation_time, energy_cost = RuneFactory.create_rune_effect(activation_rune_effect_name, level)
 
