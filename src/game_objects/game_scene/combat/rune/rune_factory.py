@@ -5,9 +5,11 @@ from .runes.water_rune import WaterRune
 from .runes.fire_rune import FireRune
 from .runes.earth_rune import EarthRune
 from .runes.air_rune import AirRune
-from .rune_effects.activation_rune_effects.cause_damage_rune_effect import CauseDamageOnActivation
-from .rune_effects.activation_rune_effects.restore_life_rune_effect import RestoreLifeOnActivation
-from .rune_effects.activation_rune_effects.restore_energy_rune_effect import RestoreEnergyOnActivation
+from .rune_effects.activation_rune_effects.cause_damage_activation_effect import CauseDamageOnActivation
+from .rune_effects.activation_rune_effects.restore_life_activation_effect import RestoreLifeOnActivation
+from .rune_effects.activation_rune_effects.restore_energy_activation_effect import RestoreEnergyOnActivation
+
+from .rune_effects.induction_rune_effects.leaves_path_effect import LeavesPathEffect
 
 
 class RuneFactory:
@@ -58,7 +60,7 @@ class RuneFactory:
         chosen_effect = random.choices(effects, weights, k=1)[0]
         
         return chosen_effect
-
+    
     @staticmethod
     def create_water_rune(level: int, activation_rune_effect_name: str = None):
         data = RuneFactory.runes_data['water_rune']
@@ -71,4 +73,6 @@ class RuneFactory:
 
         activation_rune_effect, activation_time, energy_cost = RuneFactory.create_rune_effect(activation_rune_effect_name, level)
 
-        return WaterRune(level, max_energy_bonus, activation_time, energy_cost, activation_rune_effect)
+        induction_rune_effect = LeavesPathEffect()
+
+        return WaterRune(level, max_energy_bonus, activation_time, energy_cost, activation_rune_effect, induction_rune_effect)
