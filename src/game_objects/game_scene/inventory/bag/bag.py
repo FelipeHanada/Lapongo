@@ -21,3 +21,10 @@ class InventoryFrameBag(pgf.GameObject):
             self.add_child(slot)
 
         self._trash_can = self.add_child(BagTrashCan(self, rune_inventory_user=rune_inventory_user))
+
+    def get_empty_slot(self):
+        for slot in self._bag_slots:
+            if slot.is_empty():
+                return slot
+
+        return None

@@ -22,6 +22,9 @@ class Slot(pgf.GameObject):
     def get_item(self):
         return self._item
     
+    def is_empty(self):
+        return self._item is None
+    
     def remove_item(self):
         if self._item is not None:
             self.remove_child(self._item)

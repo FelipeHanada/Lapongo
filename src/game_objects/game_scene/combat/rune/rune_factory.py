@@ -22,8 +22,8 @@ class RuneFactory:
     def __init__(self):
         pass
 
-    def create_random_rune(self):
-        pass
+    def create_random_rune(self, level: int):
+        return self.create_water_rune(level)
 
     activation_rune_effect_map = {
         'cause_damage_on_activation': CauseDamageOnActivation,
