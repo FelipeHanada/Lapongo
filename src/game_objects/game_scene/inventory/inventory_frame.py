@@ -15,5 +15,14 @@ class InventoryFrame(pgf.GameObject):
         self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path))
 
         self._bag = self.add_child(InventoryFrameBag(self, rune_inventory_user=rune_inventory_user))
-        self._shop = self.add_child(InventoryFrameShop(self, bag=self._bag, rune_inventory_user=rune_inventory_user))
+        self._shop = self.add_child(InventoryFrameShop(self, player=player, bag=self._bag, rune_inventory_user=rune_inventory_user))
         self._wallet_frame = self.add_child(InventoryFrameWalletFrame(self, player))
+
+    def get_bag(self):
+        return self._bag
+    
+    def get_shop(self):
+        return self._shop
+    
+    def get_wallet_frame(self):
+        return self._wallet_frame

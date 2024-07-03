@@ -19,11 +19,36 @@ class RuneFactory:
     with open('src/game_objects/game_scene/combat/rune/rune_effects_level_scaling.json', 'r') as rune_effects_level_scaling_file:
         rune_effects_level_scaling = json.load(rune_effects_level_scaling_file)
 
+    __cost_function = lambda level: 10 + 5 * level
+
+    runes_class_map = {
+        'water_rune': WaterRune,
+        'fire_rune': FireRune,
+        'earth_rune': EarthRune,
+        'air_rune': AirRune
+    }
+
     def __init__(self):
         pass
 
-    def create_random_rune(self, level: int):
-        return self.create_water_rune(level)
+    @staticmethod
+    def create_random_rune(level: int, activation_rune_effect_name: str = None):
+        rune_type = random.choice(list(RuneFactory.runes_class_map.keys()))
+        rune_class = RuneFactory.runes_class_map[rune_type]
+
+        data = RuneFactory.runes_data[rune_type]
+
+        cost = RuneFactory.__cost_function(level)
+        max_energy_bonus_level_scaling = data['max_energy_bonus_level_scaling']
+        max_energy_bonus = max_energy_bonus_level_scaling[level - 1]
+
+        if activation_rune_effect_name is None:
+            activation_rune_effect_appearance_rate = data['activation_rune_effect_appearance_rate']
+            activation_rune_effect_name = RuneFactory.get_random_activation_rune_effect(activation_rune_effect_appearance_rate)
+
+        activation_rune_effect, activation_time, energy_cost = RuneFactory.create_rune_effect(activation_rune_effect_name, level)
+
+        return rune_class(level, cost, max_energy_bonus, activation_time, energy_cost, activation_rune_effect)
 
     activation_rune_effect_map = {
         'cause_damage_on_activation': CauseDamageOnActivation,
@@ -60,19 +85,3 @@ class RuneFactory:
         chosen_effect = random.choices(effects, weights, k=1)[0]
         
         return chosen_effect
-    
-    @staticmethod
-    def create_water_rune(level: int, activation_rune_effect_name: str = None):
-        data = RuneFactory.runes_data['water_rune']
-        max_energy_bonus_level_scaling = data['max_energy_bonus_level_scaling']
-        max_energy_bonus = max_energy_bonus_level_scaling[level - 1]
-
-        if activation_rune_effect_name is None:
-            activation_rune_effect_appearance_rate = data['activation_rune_effect_appearance_rate']
-            activation_rune_effect_name = RuneFactory.get_random_activation_rune_effect(activation_rune_effect_appearance_rate)
-
-        activation_rune_effect, activation_time, energy_cost = RuneFactory.create_rune_effect(activation_rune_effect_name, level)
-
-        induction_rune_effect = LeavesPathEffect()
-
-        return WaterRune(level, max_energy_bonus, activation_time, energy_cost, activation_rune_effect, induction_rune_effect)

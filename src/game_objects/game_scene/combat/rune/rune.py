@@ -1,13 +1,15 @@
 import pgframework as pgf
+from pgframework.message.messenger import Messenger
 from .rune_effects.rune_effect import RuneEffect
 
 
 class Rune(pgf.GameObject):
-    def __init__(self, sprite_file: str, name: str, description: str, max_energy_bonus: int, activation_time: int, energy_cost: float, activation_effect: RuneEffect, induction_effect: RuneEffect, *args, **kwargs):
+    def __init__(self, sprite_file: str, name: str, description: str, cost: int, max_energy_bonus: int, activation_time: int, energy_cost: float, activation_effect: RuneEffect, *args, **kwargs):
         super().__init__(None, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 16, 16))
 
         self._name = name
         self._description = description
+        self._cost = cost
 
         self._max_energy_bonus = max_energy_bonus
 
@@ -15,9 +17,12 @@ class Rune(pgf.GameObject):
         self._energy_cost = energy_cost
 
         self._activation_effect: RuneEffect = activation_effect
-        self._induction_effect: RuneEffect = induction_effect
+        self._induction_effect: RuneEffect = None
 
         self.add_child(pgf.components.sprite2d.Sprite2D(self, sprite_file))
+
+    def get_cost(self) -> int:
+        return self._cost
 
     def get_activation_time(self) -> int:
         return self._activation_time
@@ -69,6 +74,8 @@ class Rune(pgf.GameObject):
     def get_description(self) -> str:
         description = f'{self._description}<br>'
         description += f'<br>'
+        description += f'<color rgb="(197, 152, 70)">Custo: </color>'
+        description += f'{self._cost} folhas<br>'
         description += f'<color rgb="(197, 152, 70)">Custo de energia: </color>'
         description += f'{self._energy_cost}<br>'
         description += f'<color rgb="(197, 152, 70)">Tempo de ativacao: </color>'

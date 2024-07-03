@@ -48,6 +48,8 @@ class GameScene(pgf.AbstractScene):
         self.add_message_callback(StartCombatButtonOnClick, self.on_start_combat_message)
         self.add_message_callback(EndCombatMessage, self.on_end_combat_message)
 
+        self.start_buy_phase()
+
     def get_current_game_phase(self):
         return self._current_game_phase
 
@@ -108,6 +110,9 @@ class GameScene(pgf.AbstractScene):
         self._enemy_rune_frame.set_visible(False)
         self._enemy_rune_frame.set_enabled(False)
         self._enemy_stats_frame.set_visible(False)
+
+        shop = self._inventory_frame.get_shop()
+        shop.on_buy_phase_start()
 
         self._start_combat_button.set_visible(True)
         self._start_combat_button.set_enabled(True)
