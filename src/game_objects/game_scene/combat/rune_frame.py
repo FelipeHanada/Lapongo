@@ -21,9 +21,7 @@ class RuneFrame(pgf.GameObject):
     def __init__(self, parent, sprite_file_path, rune_inventory_user, *args, **kwargs):
         super().__init__(parent, *args, **kwargs, rect=pgf.PygameRectAdapter(0, 0, 128, 128))
 
-        self.rune_inventory_user = rune_inventory_user
-
-        self.add_child(pgf.components.sprite2d.Sprite2D(self, sprite_file_path))
+        self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, sprite_file_path))
 
         self._rune_slots = [
             RuneSlot(self, rect=pgf.PygameRectAdapter(*pos, 16, 16), rune_inventory_user=rune_inventory_user)
@@ -36,6 +34,9 @@ class RuneFrame(pgf.GameObject):
             self._rune_slots[slot]: [self._rune_slots[adj] for adj in adjacencies]
             for slot, adjacencies in self._rune_adjacencies.items()
         }
+
+    def get_sprite2d(self):
+        return self._sprite2d
 
     def get_rune_slots(self):
         return self._rune_slots

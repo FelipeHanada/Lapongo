@@ -3,7 +3,7 @@ from .shop_slot import ShopSlot
 
 
 class InventoryFrameShop(pgf.GameObject):
-    _shop_slot_positions = ((50, 76), (72, 76), (94, 76))
+    _shop_slot_positions = ((58, 76), (80, 76), (102, 76))
 
 
     def __init__(self, *args, player=None, bag=None, rune_inventory_user=None, **kwargs):

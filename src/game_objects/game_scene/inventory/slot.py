@@ -16,6 +16,7 @@ class Slot(pgf.GameObject):
             renderer.draw_surface(surface, rect.get_position())
 
     def set_item(self, item: pgf.GameObject):
+        self.remove_item()
         self._item = item
         item.set_parent(self)
 
