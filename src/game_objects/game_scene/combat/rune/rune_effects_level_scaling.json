@@ -1,17 +1,17 @@
 {
     "cause_damage_on_activation": [
         { "activation_time": 10, "energy_cost": 10, "damage_range": [5, 7] },
-        { "activation_time": 10, "energy_cost": 20, "damage_range": [10, 15] },
-        { "activation_time": 10, "energy_cost": 50, "damage_range": [30, 50] }
+        { "activation_time": 10, "energy_cost": 15, "damage_range": [10, 15] },
+        { "activation_time": 10, "energy_cost": 25, "damage_range": [30, 50] }
     ],
     "restore_life_on_activation": [
         { "activation_time": 10, "energy_cost": 10, "life_restored_range": [5, 7] },
-        { "activation_time": 10, "energy_cost": 20, "life_restored_range": [10, 15] },
-        { "activation_time": 10, "energy_cost": 50, "life_restored_range": [30, 50] }
+        { "activation_time": 10, "energy_cost": 15, "life_restored_range": [10, 15] },
+        { "activation_time": 10, "energy_cost": 25, "life_restored_range": [30, 50] }
     ],
     "restore_energy_on_activation": [
-        { "activation_time": 50, "energy_cost": 10, "energy_restored_range": [5, 7] },
-        { "activation_time": 75, "energy_cost": 20, "energy_restored_range": [10, 15] },
-        { "activation_time": 100, "energy_cost": 30, "energy_restored_range": [60, 90] }
+        { "activation_time": 10, "energy_cost": 0, "energy_restored_range": [5, 7] },
+        { "activation_time": 20, "energy_cost": 0, "energy_restored_range": [10, 15] },
+        { "activation_time": 30, "energy_cost": 0, "energy_restored_range": [60, 90] }
     ]
 }
