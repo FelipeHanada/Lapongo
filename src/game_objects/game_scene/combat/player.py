@@ -12,7 +12,7 @@ class Player(CombatAgent):
     def __init__(self, parent: pgf.GameObject, rune_frame: PlayerRuneFrame, *args, **kwargs):
         super().__init__(parent, rune_frame, *args, **kwargs, rect=pgf.PygameRectAdapter(112, 180, 32, 32))
 
-        self._leaves = 0
+        self._leaves = 30
         self._rune_frame = rune_frame
 
         self.add_child(pgf.components.sprite2d.Sprite2DAnimated(self, self._flipbook_timed))
