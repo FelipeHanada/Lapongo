@@ -29,4 +29,6 @@ class Enemy(CombatAgent):
     def start(self, combat_controller: 'CombatController', other_agent: 'CombatAgent'):
         self.set_enemy_type(choice(list(self._sprite_file_paths.keys())))
 
+        self._enemy_rune_frame.on_combat_start()
+
         super().start(combat_controller, other_agent)

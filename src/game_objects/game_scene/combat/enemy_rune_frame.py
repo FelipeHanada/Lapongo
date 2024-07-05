@@ -1,5 +1,7 @@
 from .rune_frame import RuneFrame
+from .rune.rune_factory import RuneFactory
 import pgframework as pgf
+import random
 
 
 class EnemyRuneFrame(RuneFrame):
@@ -16,3 +18,13 @@ class EnemyRuneFrame(RuneFrame):
     def set_enemy_type(self, enemy_type):
         image = pgf.PygameSurfaceAdapter.from_image(self._sprite_file_paths[enemy_type])
         self.get_sprite2d().set_image(image)
+
+    def on_combat_start(self):
+        for slot in self.get_rune_slots():
+            slot.remove_item()
+
+        slots = list(range(9))
+        random.shuffle(slots)
+
+        for i, slot in enumerate(self.get_rune_slots()[:3]):
+            slot.set_item(RuneFactory.create_random_rune(1))
