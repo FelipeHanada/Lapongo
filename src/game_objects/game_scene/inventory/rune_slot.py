@@ -10,7 +10,7 @@ class RuneSlot(Slot):
 
         self._description_frame = self.add_child(RuneDescriptionFrame(self, visible=False))
 
-        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, rect=pgf.PygameRectAdapter(0, 0, *self.get_rect().get_size()), draw_debug_rect=True))
+        self.mouse_listener = self.add_child(pgf.components.mouse_listener.MouseListener(self, rect=pgf.PygameRectAdapter(0, 0, *self.get_rect().get_size())))
         self.mouse_listener.on_press_in_rect(1, self.on_press)
         self.mouse_listener.on_hover(self.on_hover)
         self.mouse_listener.on_unhover(self.on_mouse_unhover)
@@ -61,8 +61,8 @@ class RuneDescriptionFrame(pgf.GameObject):
 
         self._rune_slot = rune_slot
         self._sprite2d = self.add_child(pgf.components.sprite2d.Sprite2D(self, self._sprite_file_path, draw_absolute=True))
-        self._name_label = self.add_child(pgf.game_objects.label.Label(self, '', self._font_file_path, 8, (197, 152, 70), align='center', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 8, 80, 8), draw_debug_rect=False))
-        self._description_text = self.add_child(pgf.game_objects.text.Text(self, '', self._font_file_path, 6, (255, 255, 255), align='justify', align_vertical='top', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 20, 80, 44), draw_debug_rect=False))
+        self._name_label = self.add_child(pgf.game_objects.label.Label(self, '', self._font_file_path, 8, (197, 152, 70), align='center', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 8, 80, 8)))
+        self._description_text = self.add_child(pgf.game_objects.text.Text(self, '', self._font_file_path, 6, (255, 255, 255), align='justify', align_vertical='top', visible=False, draw_absolute=True, rect=pgf.PygameRectAdapter(8, 20, 80, 44)))
 
     def draw_callback(self, renderer: pgf.Renderer) -> None:
         rune = self._rune_slot.get_rune()
