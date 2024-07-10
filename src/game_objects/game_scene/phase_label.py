@@ -8,7 +8,7 @@ class PhaseLabel(pgf.game_objects.text.Text):
         rect.set_centerx(self.get_parent().get_rect().get_width() // 2)
         self.set_rect(rect)
 
-        self._current_round = 1
+        self._current_round = 0
         self._current_phase = 'compras'
         self.set_text(self.get_label(1, 'compras'))
 
