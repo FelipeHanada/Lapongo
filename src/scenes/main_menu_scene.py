@@ -4,6 +4,7 @@ from src.game_objects.main_menu.title_sign import MainMenuTitleSign
 from src.game_objects.main_menu.play_button import MainMenuPlayButton, MainMenuPlayButtonOnClick
 from src.game_objects.main_menu.close_frame_black_filter import MainMenuCloseFrameBlackFilter
 from src.game_objects.main_menu.close_frame import MainMenuCloseFrame
+import pygame
 
 
 class MainMenuScene(pgf.AbstractScene):
@@ -21,8 +22,13 @@ class MainMenuScene(pgf.AbstractScene):
 
         self.add_message_callback(MainMenuPlayButtonOnClick, self.on_play_button_pressed)
 
+        pygame.mixer.init()
+        musica = pygame.mixer.music.load("testemenu2_2.mp3")
+        pygame.mixer.music.play(-1)
+
     def on_play_button_pressed(self, message: MainMenuPlayButtonOnClick):
         self.get_game().change_scene('game')
+        pygame.mixer.music.pause()
 
     def set_open_close_frame(self, opened: bool):
         self.send_message(

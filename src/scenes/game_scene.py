@@ -11,6 +11,7 @@ from src.game_objects.game_scene.phase_label import PhaseLabel
 from src.game_objects.game_scene.combat.combat_controller import CombatController, EndCombatMessage
 from src.game_objects.game_scene.combat.stats_frame.player_stats_frame import PlayerStatsFrame
 from src.game_objects.game_scene.combat.stats_frame.enemy_stats_frame import EnemyStatsFrame
+import pygame
 
 
 class GameScene(pgf.AbstractScene):
@@ -94,6 +95,12 @@ class GameScene(pgf.AbstractScene):
         self._start_combat_button.set_enabled(False)
 
         self._phase_label.set_phase('combate')
+
+        pygame.mixer.init()
+        pygame.mixer.music.get_volume()
+        pygame.mixer.music.set_volume(0.5)
+        musica = pygame.mixer.music.load("musicaRodada.mp3")
+        pygame.mixer.music.play(-1)
 
     def start_buy_phase(self):
         self.set_current_game_phase(GameScene.BUY_PHASE)
