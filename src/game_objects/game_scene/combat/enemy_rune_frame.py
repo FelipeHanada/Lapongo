@@ -8,6 +8,8 @@ class EnemyRuneFrame(RuneFrame):
     _sprite_file_paths = {
         'frog': 'src/assets/sprites/characters/frog/frog_rune_frame.png',
         'turtle': 'src/assets/sprites/characters/turtle/turtle_rune_frame.png',
+        'aranha': 'src/assets/sprites/characters/frog/frog_rune_frame.png',
+        'borboleta': 'src/assets/sprites/characters/turtle/turtle_rune_frame.png',
     }
 
     def __init__(self, parent, rune_inventory_user, *args, **kwargs):

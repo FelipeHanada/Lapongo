@@ -23,6 +23,7 @@ class MainMenuScene(pgf.AbstractScene):
         self.add_message_callback(MainMenuPlayButtonOnClick, self.on_play_button_pressed)
 
         pygame.mixer.init()
+        pygame.mixer.music.set_volume(0.5)
         musica = pygame.mixer.music.load("testemenu2_2.mp3")
         pygame.mixer.music.play(-1)
 

@@ -8,6 +8,8 @@ class Enemy(CombatAgent):
     _sprite_file_paths = {
         'frog': 'src/assets/sprites/characters/frog/frog_idle.png',
         'turtle': 'src/assets/sprites/characters/turtle/turtle_idle.png',
+        'aranha' : 'src/assets/sprites/characters/aranha/aranha_idle.png',
+        'borboleta' : 'src/assets/sprites/characters/borboleta/borboleta_idle.png',
     }
 
     def __init__(self, parent: pgf.GameObject, rune_frame: EnemyRuneFrame, *args, **kwargs):
